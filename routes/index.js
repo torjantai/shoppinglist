@@ -80,7 +80,7 @@ router.post('/:listId/items', function(req, res, next) {
 
 
 
-//edit a specific item in a given lists
+//edit a specific item in a given list
 //update method is defined on ItemSchema
 router.put('/:listId/items/:itemId', function(req, res, next) {
     List.findById(req.params.listId, function (err, doc) {

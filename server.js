@@ -28,15 +28,15 @@ db.once('open', function() {
 });
 
 //uncomment following in order to grant cross-origin Access
-app.use(function(req, res, next, err){
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    if(req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Methods', 'PUT,POST,DELETE')
-        return res.status(200).json({});
-    }
-    next(err);
-});
+// app.use(function(req, res, next, err){
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//     if(req.method === 'OPTIONS') {
+//         res.header('Access-Control-Allow-Methods', 'PUT,POST,DELETE')
+//         return res.status(200).json({});
+//     }
+//     next(err);
+// });
 
 // ROUTES
 app.use(express.static('public'))

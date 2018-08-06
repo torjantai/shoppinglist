@@ -8,10 +8,6 @@ export default class SelectList extends Component {
         this.onChange = this.onChange.bind(this);
     }
 
-    // componentDidMount() {
-    //
-    // }
-
     onChange(event) {
         this.props.onSelectChange(event.target.value);
     }

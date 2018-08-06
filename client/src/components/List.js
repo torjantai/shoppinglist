@@ -1,4 +1,5 @@
 import React from 'react';
+import AddItem from './addItem'
 
 export default function List(props) {
 
@@ -59,20 +60,9 @@ export default function List(props) {
                 </thead>
                 <tbody>
                     {listItems}
-                    <tr>
-                        <td>
-                            <input type="text" placeholder="Tuote" />
-                        </td>
-                        <td>
-                            <input type="text" placeholder="Kategoria" />
-                        </td>
-                        <td>
-                            <button>Lisää</button>
-                        </td>
-                    </tr>
-
                 </tbody>
             </table>
+            <AddItem onItemAdd={props.onItemAdd}/>
             <h3>Tuotereservi</h3>
             <table>
                 <thead>

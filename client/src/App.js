@@ -13,6 +13,7 @@ export default class App extends Component {
     this.selectList = this.selectList.bind(this);
     this.onItemSetNeeded = this.onItemSetNeeded.bind(this);
     this.onItemDelete = this.onItemDelete.bind(this);
+    this.onItemAdd = this.onItemAdd.bind(this);
     }
 
     componentDidMount() {
@@ -20,9 +21,7 @@ export default class App extends Component {
     }
 
     selectList(id) {
-
         this.setState({selectedListId: id});
-
     }
 
     getShoppingLists() {
@@ -33,7 +32,6 @@ export default class App extends Component {
                     console.log(this.state.lists);
                     console.log(this.state.selectedListId);
                 });
-
     }
 
     //helper function to update state when only one of the lists is changed
@@ -70,6 +68,17 @@ export default class App extends Component {
         .then(list => this.updateStateLists(list));
     }
 
+    onItemAdd(data) {
+        const url = `/shoppinglist/${this.state.selectedListId}/items/`;
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers:{'Content-Type': 'application/json'},
+        }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(list => this.updateStateLists(list));
+    }
+
     render() {
         if(!this.state.lists || !this.state.selectedListId) return <div>Ladataan...</div>
 
@@ -79,6 +88,7 @@ export default class App extends Component {
                     onSelectChange={this.selectList}
                     lists={this.state.lists} />
                 <List
+                    onItemAdd={this.onItemAdd}
                     onItemDelete={this.onItemDelete}
                     onItemSetNeeded={this.onItemSetNeeded}
                     lists={this.state.lists}

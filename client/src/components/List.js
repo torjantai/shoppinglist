@@ -2,16 +2,12 @@ import React from 'react';
 
 export default function List(props) {
 
-    const items = props.list.items;
+    console.log(props);
+    const list = props.lists.find(function(obj) {return obj._id === props.selectedList});
+    const items = list.items;
     console.log(items);
     if (!items) return <div>missä lista?</div>
 
-    // if(!list) return <div>Loading</div>
-    // function renderList(list) {
-    //     return (
-    //
-    //     );
-    // }
     const listItems = items.map(item => {
 
         if (item.isNeeded) {
@@ -19,7 +15,8 @@ export default function List(props) {
                 <tr key={item._id}>
                     <td>{item.article}</td>
                     <td>{item.category}</td>
-                    <td><button onClick={() => props.onItemSetNeeded(item._id, {isNeeded: false })}>Ostettu</button></td>
+                    <td><button onClick={() => props.onItemSetNeeded(
+                        item._id, {isNeeded: false })}>Ostettu</button></td>
                     <td><button>Poista</button></td>
                 </tr>
             );
@@ -49,7 +46,7 @@ export default function List(props) {
 
     return (
         <div>
-            <h2>{props.list.listName}</h2>
+            <h2>{list.listName}</h2>
             <table>
                 <thead>
                     <tr>

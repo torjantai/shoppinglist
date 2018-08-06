@@ -12,20 +12,17 @@ export default class App extends Component {
 
     this.selectList = this.selectList.bind(this);
     this.onItemSetNeeded = this.onItemSetNeeded.bind(this);
+    this.onItemDelete = this.onItemDelete.bind(this);
     }
 
     componentDidMount() {
         this.getShoppingLists();
-
-
     }
 
     selectList(id) {
-        // console.log(this.state.lists);
-        // console.log(id);
-        // const list = this.state.lists.find(function(obj) {return obj._id === id} );
+
         this.setState({selectedListId: id});
-        // console.log(this.state.selectedList);
+
     }
 
     getShoppingLists() {
@@ -36,12 +33,12 @@ export default class App extends Component {
                     console.log(this.state.lists);
                     console.log(this.state.selectedListId);
                 });
-            // .then(() => this.selectList(this.state.lists[0]._id));
+
     }
 
+    //helper function to update state when only one of the lists is changed
     updateStateLists(newData) {
         const arrayIndex = this.state.lists.findIndex(x => x._id === this.state.selectedListId);
-        console.log(arrayIndex);
         this.setState({
             lists: [
                 ...this.state.lists.slice(0, arrayIndex),
@@ -53,9 +50,7 @@ export default class App extends Component {
     // sample url:
     // /shoppinglist/5b3b4c0915981d32d8a25685/items/5b3ca58e407cd01210835c7e
     onItemSetNeeded(itemId, data) {
-
         const url = `/shoppinglist/${this.state.selectedListId}/items/${itemId}`;
-        console.log(url);
         fetch(url, {
             method: 'PUT',
             body: JSON.stringify(data),
@@ -63,9 +58,16 @@ export default class App extends Component {
         }).then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(list => this.updateStateLists(list));
-        // .then(list => this.setState({lists: list}));
-        // .then(res => console.log('Success:', res));
+    }
 
+    onItemDelete(itemId) {
+        const url = `/shoppinglist/${this.state.selectedListId}/items/${itemId}`;
+        fetch(url, {
+            method: 'DELETE',
+            headers:{'Content-Type': 'application/json'},
+        }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(list => this.updateStateLists(list));
     }
 
     render() {
@@ -77,6 +79,7 @@ export default class App extends Component {
                     onSelectChange={this.selectList}
                     lists={this.state.lists} />
                 <List
+                    onItemDelete={this.onItemDelete}
                     onItemSetNeeded={this.onItemSetNeeded}
                     lists={this.state.lists}
                     selectedList={this.state.selectedListId} />

@@ -17,7 +17,7 @@ export default function List(props) {
                     <td>{item.category}</td>
                     <td><button onClick={() => props.onItemSetNeeded(
                         item._id, {isNeeded: false })}>Ostettu</button></td>
-                    <td><button>Poista</button></td>
+                    <td><button  onClick={() => props.onItemDelete(item._id)}>Poista</button></td>
                 </tr>
             );
         }
@@ -35,8 +35,9 @@ export default function List(props) {
                     <td>
                         {item.category}
                     </td>
-                    <td><button onClick={() => props.onItemSetNeeded(item._id, {isNeeded: true })}>Siirrä</button></td>
-                    <td><button>Poista</button></td>
+                    <td><button onClick={() => props.onItemSetNeeded(item._id,
+                        {isNeeded: true })}>Siirrä</button></td>
+                    <td><button onClick={() => props.onItemDelete(item._id)}>Poista</button></td>
                 </tr>
             );
         }

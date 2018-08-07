@@ -1,9 +1,9 @@
 import React from 'react';
-import AddItem from './addItem'
+
 
 export default function List(props) {
 
-    console.log(props);
+    //The component receives all the lists as props. We only need one, however.
     const list = props.lists.find(function(obj) {return obj._id === props.selectedList});
     const items = list.items;
     console.log(items);
@@ -19,6 +19,7 @@ export default function List(props) {
                     <td><button onClick={() => props.onItemSetNeeded(
                         item._id, {isNeeded: false })}>Ostettu</button></td>
                     <td><button  onClick={() => props.onItemDelete(item._id)}>Poista</button></td>
+                    <td><button>Muokkaa</button></td>
                 </tr>
             );
         }
@@ -62,7 +63,7 @@ export default function List(props) {
                     {listItems}
                 </tbody>
             </table>
-            <AddItem onItemAdd={props.onItemAdd}/>
+
             <h3>Tuotereservi</h3>
             <table>
                 <thead>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import './App.css'; //file deleted for now
 import SelectList from './components/SelectList';
 import List from './components/List';
+import AddItem from './components/addItem'
 
 export default class App extends Component {
     constructor(props) {
@@ -80,13 +81,15 @@ export default class App extends Component {
     }
 
     render() {
-        if(!this.state.lists || !this.state.selectedListId) return <div>Ladataan...</div>
+        if(!this.state.lists || !this.state.selectedListId) return <div>Ladataan...</div>;
 
         return (
             <div>
                 <SelectList
                     onSelectChange={this.selectList}
                     lists={this.state.lists} />
+                <AddItem
+                    onItemAdd={this.onItemAdd}/>
                 <List
                     onItemAdd={this.onItemAdd}
                     onItemDelete={this.onItemDelete}

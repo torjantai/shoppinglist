@@ -11,6 +11,7 @@ export default class AddItem extends Component {
         };
         this.onArticleInputChange = this.onArticleInputChange.bind(this);
         this.onCategoryInputChange = this.onCategoryInputChange.bind(this);
+        this.onIsNeededChange = this.onIsNeededChange.bind(this);
     }
 
     onArticleInputChange(event) {
@@ -21,8 +22,13 @@ export default class AddItem extends Component {
         this.setState({category: event.target.value});
     }
 
+    onIsNeededChange(event) {
+        this.setState({isNeeded: event.target.value});
+    }
+
     render() {
         return (
+
             <form onSubmit={(event) => {
                 event.preventDefault();
                 this.props.onItemAdd(this.state);
@@ -33,9 +39,18 @@ export default class AddItem extends Component {
                 });
 
             }}>
-                    <input value={this.state.article} onChange={this.onArticleInputChange} name="articleInput" type="text" placeholder="Tuote" />
-                    <input value={this.state.category} onChange={this.onCategoryInputChange} name="categoryInput" type="text" placeholder="Kategoria" />
-                    <input type="submit" value="Lisää" />
+            <label>
+                Lisää tuote:
+                <input value={this.state.article} onChange={this.onArticleInputChange} name="articleInput" type="text" placeholder="Tuote" />
+                <input value={this.state.category} onChange={this.onCategoryInputChange} name="categoryInput" type="text" placeholder="Kategoria" />
+                <select value={this.state.isNeeded} onChange={this.onIsNeededChange}>
+                    <option value={true}>Listalle</option>
+                    <option value={false}>Reserviin</option>
+                </select>
+                <input type="submit" value="Lisää" />
+
+            </label>
+
             </form>
         );
     }

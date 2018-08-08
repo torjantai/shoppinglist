@@ -12,7 +12,7 @@ export default class App extends Component {
                         };
 
     this.selectList = this.selectList.bind(this);
-    this.onItemSetNeeded = this.onItemSetNeeded.bind(this);
+    this.onItemEdit = this.onItemEdit.bind(this);
     this.onItemDelete = this.onItemDelete.bind(this);
     this.onItemAdd = this.onItemAdd.bind(this);
     }
@@ -48,7 +48,7 @@ export default class App extends Component {
     }
     // sample url:
     // /shoppinglist/5b3b4c0915981d32d8a25685/items/5b3ca58e407cd01210835c7e
-    onItemSetNeeded(itemId, data) {
+    onItemEdit(itemId, data) {
         const url = `/shoppinglist/${this.state.selectedListId}/items/${itemId}`;
         fetch(url, {
             method: 'PUT',
@@ -93,10 +93,10 @@ export default class App extends Component {
                 <List
                     onItemAdd={this.onItemAdd}
                     onItemDelete={this.onItemDelete}
-                    onItemSetNeeded={this.onItemSetNeeded}
+                    onItemEdit={this.onItemEdit}
                     lists={this.state.lists}
                     selectedList={this.state.selectedListId} />
             </div>
         );
-  }
+    }
 }

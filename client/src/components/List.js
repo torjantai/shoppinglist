@@ -66,7 +66,7 @@ export default function List(props) {
                     {reserveItems}
                 </tbody>
             </table>
-            <button onClick={() => console.log(props.list._id)}>Poista lista</button>
+            <button onClick={() => props.onListDelete(props.list._id)}>Poista lista</button>
         </div>
 
     );

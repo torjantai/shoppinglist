@@ -37,7 +37,6 @@ export default class App extends Component {
         .catch(error => console.error('Error:', error))
         // .then(this.getShoppingLists());
         .then(list => {
-
             this.updateStateLists(list);
             this.selectList(list._id);
             console.log(list, this.state.selectedListId);
@@ -58,7 +57,16 @@ export default class App extends Component {
     }
 
     onListDelete() {
-
+        const url = `/shoppinglist/${this.state.selectedListId}`;
+        fetch(url, {
+            method: 'DELETE',
+            headers:{'Content-Type': 'application/json'},
+        }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(lists => { this.setState({
+            lists: lists, selectedListId: lists[0]._id
+            });
+        });
     }
 
     // getShoppingLists(listId) {
@@ -132,6 +140,7 @@ export default class App extends Component {
                 <AddItem
                     onItemAdd={this.onItemAdd}/>
                 <List
+                    onListDelete={this.onListDelete}
                     onItemAdd={this.onItemAdd}
                     onItemDelete={this.onItemDelete}
                     onItemEdit={this.onItemEdit}

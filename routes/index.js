@@ -56,14 +56,14 @@ router.delete('/:listId/', function(req, res, next) {
 
         doc.remove(function (err) {
             if (err) return next(err);
-
+            List.find({})
+                    .exec(function(err, items) {
+                        if (err) return next(err);
+                        res.status(201);
+                        res.json(items);
+                    });
         });
-        List.find({})
-                .exec(function(err, items) {
-                    if (err) return next(err);
-                    res.status(201);
-                    res.json(items);
-                });
+
     });
 });
 

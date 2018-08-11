@@ -2,10 +2,10 @@ import React from 'react';
 import ListRow from './ListRow';
 
 export default function List(props) {
-
+    if (!props.list) return <div>ladataan</div>;
     //The component receives all the lists as props. We only use the selected one, however.
-    const list = props.lists.find(function(obj) {return obj._id === props.selectedList});
-    const items = list.items;
+
+    const items = props.list.items;
     console.log(items);
     if (!items) return <div>missä lista?</div>
 
@@ -46,7 +46,7 @@ export default function List(props) {
 
     return (
         <div>
-            <h2>{list.listName}</h2>
+            <h2>{props.list.listName}</h2>
             <table>
                 <thead>
                     <tr>

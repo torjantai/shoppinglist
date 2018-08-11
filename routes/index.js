@@ -58,7 +58,7 @@ router.post('/:listId/items', function(req, res, next) {
         //console.dir(doc);
         if (err) return next(err);
         if (!doc) {
-            err = new Error(`No list found with id ${id}`);
+            err = new Error(`No list found with id ${req.params.listId}`);
             err.status = 404;
             return next(err);
         }

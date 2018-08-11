@@ -15,6 +15,7 @@ export default class App extends Component {
     this.onItemEdit = this.onItemEdit.bind(this);
     this.onItemDelete = this.onItemDelete.bind(this);
     this.onItemAdd = this.onItemAdd.bind(this);
+    this.createList = this.createList.bind(this);
     }
 
     componentDidMount() {
@@ -25,15 +26,45 @@ export default class App extends Component {
         this.setState({selectedListId: id});
     }
 
-    getShoppingLists() {
+    createList(data) {
+        const url = `/shoppinglist`;
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers:{'Content-Type': 'application/json'},
+        }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        // .then(this.getShoppingLists());
+        .then(list => {
+
+            this.updateStateLists(list);
+            this.selectList(list._id);
+            console.log(list, this.state.selectedListId);
+        });
+    }
+
+    getShoppingLists(listId) {
         fetch('/shoppinglist')
             .then(res => res.json())
-            .then(lists => this.setState({ lists: lists, selectedListId: lists[0]._id }))
+            .then(lists => {
+                const _listId = listId || lists[0]._id;
+                this.setState({ lists: lists, selectedListId: _listId });
+            })
             .then(() => {
                     console.log(this.state.lists);
                     console.log(this.state.selectedListId);
                 });
     }
+
+    // getShoppingLists(listId) {
+    //     fetch('/shoppinglist')
+    //         .then(res => res.json())
+    //         .then(lists => this.setState({ lists: lists, selectedListId: lists[0]._id }))
+    //         .then(() => {
+    //                 console.log(this.state.lists);
+    //                 console.log(this.state.selectedListId);
+    //             });
+    // }
 
     //helper function to update state when only one of the lists is changed
     updateStateLists(newData) {
@@ -83,9 +114,14 @@ export default class App extends Component {
     render() {
         if(!this.state.lists || !this.state.selectedListId) return <div>Ladataan...</div>;
 
+
+        const list = this.state.lists.find(obj => {return obj._id === this.state.selectedListId});
+
         return (
             <div>
                 <SelectList
+                    selectedList={this.state.selectedListId}
+                    createList={this.createList}
                     onSelectChange={this.selectList}
                     lists={this.state.lists} />
                 <AddItem
@@ -94,7 +130,7 @@ export default class App extends Component {
                     onItemAdd={this.onItemAdd}
                     onItemDelete={this.onItemDelete}
                     onItemEdit={this.onItemEdit}
-                    lists={this.state.lists}
+                    list={list}
                     selectedList={this.state.selectedListId} />
             </div>
         );

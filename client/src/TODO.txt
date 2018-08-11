@@ -1,0 +1,11 @@
+Error handling
+input validation
+    -should not be possible to submit without filling both fields
+
+
+toiminnot
+    lisää lista
+
+
+REST API
+    implement list deletion

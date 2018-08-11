@@ -36,7 +36,7 @@ router.get('/:listId', function (req, res, next) {
 
         if (err) return next(err);
         if (!doc) {
-            err = new Error(`No list found with id ${id}`);
+            err = new Error(`No list found with id ${req.params.listId}`);
             err.status = 404;
             return next(err);
         }
@@ -45,7 +45,27 @@ router.get('/:listId', function (req, res, next) {
 });
 
 //delete a list
+router.delete('/:listId/', function(req, res, next) {
+    List.findById(req.params.listId, function (err, doc) {
+        if (err) return next(err);
+        if (!doc) {
+            err = new Error(`No list found with id ${req.params.listId}`);
+            err.status = 404;
+            return next(err);
+        }
 
+        doc.remove(function (err) {
+            if (err) return next(err);
+        
+        });
+        List.find({})
+                .exec(function(err, items) {
+                    if (err) return next(err);
+                    res.status(201);
+                    res.json(items);
+                });
+    });
+});
 
 //edit a list's name
 

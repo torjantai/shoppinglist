@@ -114,7 +114,7 @@ export default class App extends Component {
     render() {
         if(!this.state.lists || !this.state.selectedListId) return <div>Ladataan...</div>;
 
-
+        // const selectedListId = this.state.selectedListId;
         const list = this.state.lists.find(obj => {return obj._id === this.state.selectedListId});
 
         return (

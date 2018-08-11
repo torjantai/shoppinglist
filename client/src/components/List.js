@@ -2,13 +2,9 @@ import React from 'react';
 import ListRow from './ListRow';
 
 export default function List(props) {
-    if (!props.list) return <div>ladataan</div>;
-
 
     const items = props.list.items;
-    console.log(items);
-    if (!items) return <div>missä lista?</div>
-
+    
     const listItems = items.map(item => {
 
         if (item.isNeeded) {

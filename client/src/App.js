@@ -16,6 +16,7 @@ export default class App extends Component {
     this.onItemDelete = this.onItemDelete.bind(this);
     this.onItemAdd = this.onItemAdd.bind(this);
     this.createList = this.createList.bind(this);
+    this.onListDelete = this.onListDelete.bind(this);
     }
 
     componentDidMount() {
@@ -54,6 +55,10 @@ export default class App extends Component {
                     console.log(this.state.lists);
                     console.log(this.state.selectedListId);
                 });
+    }
+
+    onListDelete() {
+
     }
 
     // getShoppingLists(listId) {

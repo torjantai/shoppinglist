@@ -56,7 +56,7 @@ router.delete('/:listId/', function(req, res, next) {
 
         doc.remove(function (err) {
             if (err) return next(err);
-        
+
         });
         List.find({})
                 .exec(function(err, items) {
@@ -67,7 +67,7 @@ router.delete('/:listId/', function(req, res, next) {
     });
 });
 
-//edit a list's name
+//edit a list
 
 
 //POST /:id/item

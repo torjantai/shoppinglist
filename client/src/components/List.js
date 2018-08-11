@@ -3,7 +3,7 @@ import ListRow from './ListRow';
 
 export default function List(props) {
     if (!props.list) return <div>ladataan</div>;
-    //The component receives all the lists as props. We only use the selected one, however.
+
 
     const items = props.list.items;
     console.log(items);

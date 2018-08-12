@@ -7,7 +7,7 @@ import AddItem from './components/addItem'
 export default class App extends Component {
     constructor(props) {
         super(props);
-        this.state =    {   lists: null,
+        this.state =    {   lists: [],
                             selectedListId: null
                         };
 
@@ -27,9 +27,6 @@ export default class App extends Component {
         this.setState({selectedListId: id});
     }
 
-//TODO: updateStateLists does not work the way it is used here.
-// need to do something else. List create throws now, but list
-// is created anyhow
     createList(data) {
         const url = `/shoppinglist`;
         fetch(url, {
@@ -38,27 +35,36 @@ export default class App extends Component {
             headers:{'Content-Type': 'application/json'},
         }).then(res => res.json())
         .catch(error => console.error('Error:', error))
-        // .then(this.getShoppingLists());
         .then(list => {
             console.log(list);
-            // const newState = this.state.lists.push(list);
-            // console.log(newState);
-            this.setState({ lists: [...this.state.lists, list], selectedListId: list._id });
+            this.setState({ lists: this.state.lists.concat(list), selectedListId: list._id });
+            // this.setState({ lists: [...this.state.lists, list], selectedListId: list._id });
         });
-        // .then(list => {
-        //     this.updateStateLists(list);
-        //     this.selectList(list._id);
-        //     console.log(list, this.state.selectedListId);
-        // });
+
     }
 
     getShoppingLists(listId) {
         fetch('/shoppinglist')
             .then(res => res.json())
+            .catch(error => console.error('Error:', error))
             .then(lists => {
-                const _listId = listId || lists[0]._id;
-                this.setState({ lists: lists, selectedListId: _listId });
+                if (lists.length > 0) {
+                    const _listId = listId || lists[0]._id;
+                    this.setState({ lists: lists, selectedListId: _listId });
+                } else {
+                    this.createList({
+                        listName: 'Madness',
+                        owner: 'madman',
+                        items: [{
+                            article: 'Olutta',
+                            category: 'oispa',
+                            isNeeded: true
+                        }]
+                    });
+                }
+
             })
+            .catch(error => console.error('Error:', error))
             .then(() => {
                     console.log(this.state.lists);
                     console.log(this.state.selectedListId);
@@ -66,6 +72,7 @@ export default class App extends Component {
     }
 
     onListDelete() {
+        if (this.state.lists.length < 2) return;
         const url = `/shoppinglist/${this.state.selectedListId}`;
         fetch(url, {
             method: 'DELETE',
@@ -124,7 +131,7 @@ export default class App extends Component {
     }
 
     render() {
-        if(!this.state.lists || !this.state.selectedListId) return <div>Ladataan...</div>;
+        if(this.state.lists.length === 0 || !this.state.selectedListId) return <div>Ladataan...</div>;
 
         const list = this.state.lists.find(obj => {return obj._id === this.state.selectedListId});
 

@@ -1,11 +1,7 @@
-Error handling
+Error handling must be improved
+
 input validation
     -should not be possible to submit without filling both fields
 
 
-toiminnot
-    lisää lista
-
-
-REST API
-    implement list deletion
+disable/hide list delete button when there is only one list

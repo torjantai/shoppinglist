@@ -27,6 +27,9 @@ export default class App extends Component {
         this.setState({selectedListId: id});
     }
 
+//TODO: updateStateLists does not work the way it is used here.
+// need to do something else. List create throws now, but list
+// is created anyhow
     createList(data) {
         const url = `/shoppinglist`;
         fetch(url, {
@@ -37,10 +40,16 @@ export default class App extends Component {
         .catch(error => console.error('Error:', error))
         // .then(this.getShoppingLists());
         .then(list => {
-            this.updateStateLists(list);
-            this.selectList(list._id);
-            console.log(list, this.state.selectedListId);
+            console.log(list);
+            // const newState = this.state.lists.push(list);
+            // console.log(newState);
+            this.setState({ lists: [...this.state.lists, list], selectedListId: list._id });
         });
+        // .then(list => {
+        //     this.updateStateLists(list);
+        //     this.selectList(list._id);
+        //     console.log(list, this.state.selectedListId);
+        // });
     }
 
     getShoppingLists(listId) {
@@ -68,16 +77,6 @@ export default class App extends Component {
             });
         });
     }
-
-    // getShoppingLists(listId) {
-    //     fetch('/shoppinglist')
-    //         .then(res => res.json())
-    //         .then(lists => this.setState({ lists: lists, selectedListId: lists[0]._id }))
-    //         .then(() => {
-    //                 console.log(this.state.lists);
-    //                 console.log(this.state.selectedListId);
-    //             });
-    // }
 
     //helper function to update state when only one of the lists is changed
     updateStateLists(newData) {
@@ -127,7 +126,6 @@ export default class App extends Component {
     render() {
         if(!this.state.lists || !this.state.selectedListId) return <div>Ladataan...</div>;
 
-        // const selectedListId = this.state.selectedListId;
         const list = this.state.lists.find(obj => {return obj._id === this.state.selectedListId});
 
         return (

@@ -5,9 +5,6 @@ export default class SelectList extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            selected: this.props.selectedList
-        }
         this.onChange = this.onChange.bind(this);
     }
 
@@ -34,7 +31,7 @@ export default class SelectList extends Component {
                 <label>
                     Valitse lista:
                     <select
-                        value={this.state.selected}
+                        value={this.props.selectedList}
                         onChange={this.onChange}>
 
                         {this.props.lists.map(list => {

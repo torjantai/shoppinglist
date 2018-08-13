@@ -15,6 +15,8 @@ app.use(jsonParser({extended: true}));
 
 
 
+
+
 // MONGO CONNECTION
 mongoose.connect('mongodb://localhost:27017/shoppingList');
 const db = mongoose.connection;
@@ -39,12 +41,9 @@ db.once('open', function() {
 // });
 
 // ROUTES
-app.use(express.static('public'))
+app.use('/', express.static('public'))
 //create a virtual path /shoppinglist and use routes from /route
 app.use('/shoppinglist', routes);
-
-
-
 
 
 //ERROR HANDLING

@@ -11,7 +11,7 @@ export default class SelectList extends Component {
     onChange(event) {
         if(event.target.value === 'new list') {
             this.props.createList({
-                listName: 'Madness',
+                listName: 'Uusi lista',
                 owner: 'madman',
                 items: [{
                     article: 'Olutta',

@@ -18,7 +18,7 @@ app.use(jsonParser({extended: true}));
 
 
 // MONGO CONNECTION
-mongoose.connect('mongodb://localhost:27017/shoppingList');
+mongoose.connect('mongodb://localhost:27017/shoppingList', { connectionTimeoutMS: 60000 });
 const db = mongoose.connection;
 
 db.on('error', function(err){

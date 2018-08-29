@@ -34,7 +34,7 @@ export default class ListName extends Component {
 
         if (!this.state.editing) {
             return (
-                <h2>{this.state.listName}<button onClick={this.onEditButtonClick}>Muokkaa</button></h2>
+                <h2>{this.state.listName}<button onClick={this.onEditButtonClick}>Nimeä uudelleen</button></h2>
             );
         }
 

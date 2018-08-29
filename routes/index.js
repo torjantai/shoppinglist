@@ -76,8 +76,10 @@ router.put('/:listId/', function(req, res, next) {
             err.status = 404;
             return next(err);
         }
-        doc.update(req.body, function (err, result) {
+        doc.listName = req.body.listName;
+        doc.save(function(err) {
             if (err) return next(err);
+            res.status(201);
             res.json(doc);
         });
     });

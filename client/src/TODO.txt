@@ -5,3 +5,8 @@ input validation
 
 
 disable/hide list delete button when there is only one list
+
+move item add inputs inside the table
+
+add authentication to page
+add authentication to rest api

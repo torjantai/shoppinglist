@@ -1,5 +1,7 @@
 import React from 'react';
 import ListRow from './ListRow';
+import ListName from './ListName';
+
 
 export default function List(props) {
 
@@ -36,7 +38,9 @@ export default function List(props) {
 
     return (
         <div>
-            <h2>{props.list.listName}</h2>
+            <ListName
+                onListEdit={props.onListEdit}
+                listName={props.list.listName} />
             <h3>Ostettavat</h3>
             <table>
                 <thead>

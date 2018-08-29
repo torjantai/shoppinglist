@@ -68,7 +68,20 @@ router.delete('/:listId/', function(req, res, next) {
 });
 
 //edit a list
-
+router.put('/:listId/', function(req, res, next) {
+    List.findById(req.params.listId, function (err, doc) {
+        if (err) return next(err);
+        if (!doc) {
+            err = new Error(`No list found with id ${req.params.listId}`);
+            err.status = 404;
+            return next(err);
+        }
+        doc.update(req.body, function (err, result) {
+            if (err) return next(err);
+            res.json(doc);
+        });
+    });
+});
 
 //POST /:id/item
 //create an item in a given list

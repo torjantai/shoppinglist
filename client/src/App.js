@@ -17,6 +17,7 @@ export default class App extends Component {
     this.onItemAdd = this.onItemAdd.bind(this);
     this.createList = this.createList.bind(this);
     this.onListDelete = this.onListDelete.bind(this);
+    this.onListEdit = this.onListEdit.bind(this);
     }
 
     componentDidMount() {
@@ -24,7 +25,7 @@ export default class App extends Component {
     }
 
     selectList(id) {
-        this.setState({selectedListId: id});
+        this.setState({ selectedListId: id });
     }
 
     createList(data) {
@@ -96,6 +97,17 @@ export default class App extends Component {
             ]
         });
     }
+    onListEdit(data) {
+        console.log('app - onListEdit');
+        const url = `/shoppinglist/${this.state.selectedListId}`;
+        fetch(url, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers:{'Content-Type': 'application/json'},
+        }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(list => this.updateStateLists(list));
+    }
     // sample url:
     // /shoppinglist/5b3b4c0915981d32d8a25685/items/5b3ca58e407cd01210835c7e
     onItemEdit(itemId, data) {
@@ -145,6 +157,7 @@ export default class App extends Component {
                 <AddItem
                     onItemAdd={this.onItemAdd}/>
                 <List
+                    onListEdit={this.onListEdit}
                     onListDelete={this.onListDelete}
                     onItemAdd={this.onItemAdd}
                     onItemDelete={this.onItemDelete}

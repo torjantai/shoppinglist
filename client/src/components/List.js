@@ -36,7 +36,10 @@ export default function List(props) {
 
     });
 
+    console.log(props.list.listName);
+
     return (
+
         <div>
             <ListName
                 onListEdit={props.onListEdit}

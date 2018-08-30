@@ -14,9 +14,6 @@ export default class ListName extends Component {
         this.onInputChange = this.onInputChange.bind(this);
         this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
     }
-    // componentDidMount() {
-    //     this.setState({ listName: this.props.listName});
-    // }
 
     onEditButtonClick() {
         this.setState({ listName: this.props.listName, editing: true });
@@ -39,7 +36,7 @@ export default class ListName extends Component {
         console.log(this.props.listName);
         if (!this.state.editing) {
             return (
-                <h2>{this.props.listName}<button onClick={this.onEditButtonClick}>Nimeä uudelleen</button></h2>
+                <h2>{this.state.listName}<button onClick={this.onEditButtonClick}>Nimeä uudelleen</button></h2>
             );
         }
 

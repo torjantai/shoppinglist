@@ -8,4 +8,3 @@ Should probably work on localhost without tweaking (needs mongodb on localhost).
 
 
 #### Known Issues
-* ListName component does not get updated as it should

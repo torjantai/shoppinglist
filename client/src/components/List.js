@@ -42,6 +42,7 @@ export default function List(props) {
 
         <div>
             <ListName
+                key={props.list._id}
                 onListEdit={props.onListEdit}
                 listName={props.list.listName} />
             <h3>Ostettavat</h3>

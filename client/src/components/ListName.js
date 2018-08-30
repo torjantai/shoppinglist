@@ -14,12 +14,12 @@ export default class ListName extends Component {
         this.onInputChange = this.onInputChange.bind(this);
         this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
     }
-    componentWillReceiveProps() {
-        this.setState({ listName: this.props.listName});
-    }
+    // componentDidMount() {
+    //     this.setState({ listName: this.props.listName});
+    // }
 
     onEditButtonClick() {
-        this.setState({ editing: true });
+        this.setState({ listName: this.props.listName, editing: true });
         console.log('editing title');
     }
 

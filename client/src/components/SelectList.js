@@ -39,7 +39,7 @@ export default class SelectList extends Component {
                                 <option
                                     value={list._id}
                                     key={list._id}>
-                                    {list.listName} {list._id}
+                                    {list.listName}
                                 </option>
                             );
                         })}

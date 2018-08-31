@@ -36,7 +36,7 @@ export default function List(props) {
 
     });
 
-    console.log(props.list.listName);
+    // console.log(props.list.listName);
 
     return (
 

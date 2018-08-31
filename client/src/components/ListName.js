@@ -17,12 +17,12 @@ export default class ListName extends Component {
 
     onEditButtonClick() {
         this.setState({ listName: this.props.listName, editing: true });
-        console.log('editing title');
+        // console.log('editing title');
     }
 
     onInputChange(event) {
         this.setState({ listName: event.target.value });
-        console.log(this.state.listName);
+        // console.log(this.state.listName);
     }
 
     onSaveButtonClick() {
@@ -32,8 +32,8 @@ export default class ListName extends Component {
 
     render() {
 
-        console.log(this.state);
-        console.log(this.props.listName);
+        // console.log(this.state);
+        // console.log(this.props.listName);
         if (!this.state.editing) {
             return (
                 <h2>{this.state.listName}<button onClick={this.onEditButtonClick}>Nimeä uudelleen</button></h2>

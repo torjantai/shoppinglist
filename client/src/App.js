@@ -154,8 +154,8 @@ export default class App extends Component {
                     createList={this.createList}
                     onSelectChange={this.selectList}
                     lists={this.state.lists} />
-                <AddItem
-                    onItemAdd={this.onItemAdd}/>
+                {/* <AddItem
+                    onItemAdd={this.onItemAdd}/> */}
                 <List
                     onListEdit={this.onListEdit}
                     onListDelete={this.onListDelete}

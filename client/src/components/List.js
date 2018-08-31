@@ -1,7 +1,7 @@
 import React from 'react';
 import ListRow from './ListRow';
 import ListName from './ListName';
-
+import AddRow from './AddRow';
 
 export default function List(props) {
 
@@ -56,6 +56,7 @@ export default function List(props) {
                     </tr>
                 </thead>
                 <tbody>
+                    <AddRow onItemAdd={props.onItemAdd}/>
                     {listItems}
                 </tbody>
             </table>

@@ -43,6 +43,8 @@ export default class ListName extends Component {
         return (
             <h2>
                 <input
+                    className="form-control"
+                    maxLength="20"
                     value={this.state.listName}
                     onChange={this.onInputChange} />
                 <button

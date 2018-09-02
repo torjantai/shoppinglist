@@ -22,10 +22,13 @@ export default class AddRow extends Component {
     }
 
     render() {
+        const isDisabled = ( this.state.article === '' || this.state.category === '' ) ? true : false;
+        
         return (
             <tr>
                     <td>
                         <input
+                            className="input-group"
                             placeholder="Lisää tuote"
                             value={this.state.article}
                             onChange={this.onArticleInputChange}
@@ -34,6 +37,7 @@ export default class AddRow extends Component {
                     </td>
                     <td>
                         <input
+                            className="input-group"
                             placeholder="kategoria"
                             value={this.state.category}
                             onChange={this.onCategoryInputChange}
@@ -42,6 +46,7 @@ export default class AddRow extends Component {
                     </td>
 
                     <td><button
+                            disabled={isDisabled}
                             onClick={() => {
                                 this.props.onItemAdd(this.state);
                                 this.setState({ article: '', category: '' });

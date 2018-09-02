@@ -47,11 +47,12 @@ export default class ListRow extends Component {
                     <td>
                         <button onClick={() => this.props.onItemEdit(
                         this.props.item._id, {isNeeded: !this.props.item.isNeeded })}>{moveButtonText}</button>
-                    </td>
-                    <td>
+
+
                         <button  onClick={() => this.props.onItemDelete(this.props.item._id)}>Poista</button>
-                    </td>
-                    <td><button onClick={this.onEditButtonClick}>Muokkaa</button></td>
+
+                    <button onClick={this.onEditButtonClick}>Muokkaa</button>
+                </td>
                 </tr>
             );
         }
@@ -64,11 +65,11 @@ export default class ListRow extends Component {
                 <td>
                     <button disabled onClick={() => this.props.onItemEdit(
                     this.props.item._id, {isNeeded: false })}>Ostettu</button>
-                </td>
-                <td>
+
+
                     <button disabled onClick={() => this.props.onItemDelete(this.props.item._id)}>Poista</button>
-                </td>
-                <td><button onClick={this.onSaveButtonClick}>Tallenna</button></td>
+
+                <button onClick={this.onSaveButtonClick}>Tallenna</button></td>
             </tr>
         );
 

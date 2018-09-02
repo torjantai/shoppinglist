@@ -46,13 +46,13 @@ export default function List(props) {
                 onListEdit={props.onListEdit}
                 listName={props.list.listName} />
             <h3>Ostettavat</h3>
-            <table>
+
+            <table className="table table-striped">
                 <thead>
                     <tr>
-                        <th>Tuote</th>
-                        <th>Kategoria</th>
-                        <th>Ostettu</th>
-                        <th>Poista</th>
+                        <th scope="col">Tuote</th>
+                        <th scope="col">Kategoria</th>
+                        <th scope="col">Ostettu</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,13 +62,12 @@ export default function List(props) {
             </table>
 
             <h3>Tuotereservi</h3>
-            <table>
+            <table className="table table-striped">
                 <thead>
                     <tr>
                         <th>Tuote</th>
                         <th>Kategoria</th>
                         <th>Ostettaviin</th>
-                        <th>Poista</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import './App.css'; //file deleted for now
 import SelectList from './components/SelectList';
 import List from './components/List';
-import AddItem from './components/addItem'
+// import AddItem from './components/addItem'
 
 export default class App extends Component {
     constructor(props) {
@@ -148,7 +148,7 @@ export default class App extends Component {
         const list = this.state.lists.find(obj => {return obj._id === this.state.selectedListId});
 
         return (
-            <div>
+            <div className="bg-light mt-5 p-3">
                 <SelectList
                     selectedList={this.state.selectedListId}
                     createList={this.createList}

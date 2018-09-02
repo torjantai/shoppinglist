@@ -31,6 +31,7 @@ export default class SelectList extends Component {
                 <label>
                     Valitse lista:
                     <select
+                        className="form-control"
                         value={this.props.selectedList}
                         onChange={this.onChange}>
 

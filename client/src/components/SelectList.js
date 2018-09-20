@@ -28,27 +28,23 @@ export default class SelectList extends Component {
         console.log(this.props)
         return (
             <form>
-                <label>
-                    Valitse lista:
-                    <select
-                        className="form-control"
-                        value={this.props.selectedList}
-                        onChange={this.onChange}>
+                <select
+                    className="form-control"
+                    value={this.props.selectedList}
+                    onChange={this.onChange}>
 
-                        {this.props.lists.map(list => {
-                            return (
-                                <option
-                                    value={list._id}
-                                    key={list._id}>
-                                    {list.listName}
-                                </option>
-                            );
-                        })}
-                        <option value="new list" key="new list">Luo uusi lista</option>
+                    {this.props.lists.map(list => {
+                        return (
+                            <option
+                                value={list._id}
+                                key={list._id}>
+                                {list.listName}
+                            </option>
+                        );
+                    })}
+                    <option value="new list" key="new list">Luo uusi lista</option>
 
-                    </select>
-
-                </label>
+                </select>
             </form>
 
 

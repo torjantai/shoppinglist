@@ -11,6 +11,8 @@ export default class AddRow extends Component {
         };
         this.onArticleInputChange = this.onArticleInputChange.bind(this);
         this.onCategoryInputChange = this.onCategoryInputChange.bind(this);
+        this.onSave = this.onSave.bind(this);
+        this.onInputEnter = this.onInputEnter.bind(this);
     }
 
     onArticleInputChange(event) {
@@ -21,13 +23,25 @@ export default class AddRow extends Component {
         this.setState({category: event.target.value});
     }
 
+    onSave() {
+        this.props.onItemAdd(this.state);
+        this.setState({ article: '', category: '' });
+    }
+
+    onInputEnter(e) {
+        if (e.keyCode === 13) {
+           this.onSave();
+        }
+    }
+
     render() {
         const isDisabled = ( this.state.article === '' || this.state.category === '' ) ? true : false;
-        
+
         return (
             <tr>
                     <td>
                         <input
+                            onKeyDown={this.onInputEnter}
                             className="input-group"
                             placeholder="Lisää tuote"
                             value={this.state.article}
@@ -37,6 +51,7 @@ export default class AddRow extends Component {
                     </td>
                     <td>
                         <input
+                            onKeyDown={this.onInputEnter}
                             className="input-group"
                             placeholder="kategoria"
                             value={this.state.category}
@@ -47,10 +62,8 @@ export default class AddRow extends Component {
 
                     <td><button
                             disabled={isDisabled}
-                            onClick={() => {
-                                this.props.onItemAdd(this.state);
-                                this.setState({ article: '', category: '' });
-                            }}>Tallenna</button></td>
+                            onClick={this.onSave}
+                        >Tallenna</button></td>
                 </tr>
         );
 

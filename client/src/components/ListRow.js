@@ -42,8 +42,8 @@ export default class ListRow extends Component {
         if (!this.state.editing) {
             return (
                 <tr>
-                    <td>{this.props.item.article}</td>
-                    <td>{this.props.item.category}</td>
+                    <td onClick={this.onEditButtonClick}>{this.props.item.article}</td>
+                    <td onClick={this.onEditButtonClick}>{this.props.item.category}</td>
                     <td>
                         <button onClick={() => this.props.onItemEdit(
                         this.props.item._id, {isNeeded: !this.props.item.isNeeded })}>{moveButtonText}</button>
@@ -51,7 +51,7 @@ export default class ListRow extends Component {
 
                         <button  onClick={() => this.props.onItemDelete(this.props.item._id)}>Poista</button>
 
-                    <button onClick={this.onEditButtonClick}>Muokkaa</button>
+                    {/* <button onClick={this.onEditButtonClick}>Muokkaa</button> */}
                 </td>
                 </tr>
             );
@@ -63,11 +63,11 @@ export default class ListRow extends Component {
                 <input value={this.state.article} onChange={this.onArticleInputChange} name="articleInput" type="text" /></td>
                 <td><input value={this.state.category} onChange={this.onCategoryInputChange} name="categoryInput" type="text" /></td>
                 <td>
-                    <button disabled onClick={() => this.props.onItemEdit(
+                    {/* <button disabled onClick={() => this.props.onItemEdit(
                     this.props.item._id, {isNeeded: false })}>Ostettu</button>
 
 
-                    <button disabled onClick={() => this.props.onItemDelete(this.props.item._id)}>Poista</button>
+                    <button disabled onClick={() => this.props.onItemDelete(this.props.item._id)}>Poista</button> */}
 
                 <button onClick={this.onSaveButtonClick}>Tallenna</button></td>
             </tr>

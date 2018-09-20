@@ -47,7 +47,7 @@ export default function List(props) {
                 listName={props.list.listName} />
             <h3>Ostettavat</h3>
 
-            <table className="table table-striped">
+            <table className="table table-hover">
                 <thead>
                     <tr>
                         <th scope="col">Tuote</th>
@@ -62,7 +62,7 @@ export default function List(props) {
             </table>
 
             <h3>Tuotereservi</h3>
-            <table className="table table-striped">
+            <table className="table table-hover">
                 <thead>
                     <tr>
                         <th>Tuote</th>

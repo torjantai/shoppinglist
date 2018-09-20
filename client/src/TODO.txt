@@ -1,7 +1,10 @@
 Error handling must be improved
 
-input validation
-    -should not be possible to submit without filling both fields
+input validation?
+
+Sort list?
+    -by name?
+    -by category?
 
 
 disable/hide list delete button when there is only one list

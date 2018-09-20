@@ -15,7 +15,7 @@ export default class SelectList extends Component {
                 owner: 'madman',
                 items: [{
                     article: 'Olutta',
-                    category: 'oispa',
+                    category: 'Juomat',
                     isNeeded: true
                 }]
             });

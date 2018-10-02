@@ -153,7 +153,8 @@ export default class App extends Component {
                     selectedList={this.state.selectedListId}
                     createList={this.createList}
                     onSelectChange={this.selectList}
-                    lists={this.state.lists} />
+                    lists={this.state.lists}
+                />
                 {/* <AddItem
                     onItemAdd={this.onItemAdd}/> */}
                 <List
@@ -163,7 +164,8 @@ export default class App extends Component {
                     onItemDelete={this.onItemDelete}
                     onItemEdit={this.onItemEdit}
                     list={list}
-                    selectedList={this.state.selectedListId} />
+                    selectedList={this.state.selectedListId}
+                />
             </div>
         );
     }

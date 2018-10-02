@@ -15,7 +15,8 @@ export default function List(props) {
                     onItemDelete={props.onItemDelete}
                     onItemEdit={props.onItemEdit}
                     item={item}
-                    key={item._id}/>
+                    key={item._id}
+                />
             );
         }
         return null;
@@ -29,7 +30,8 @@ export default function List(props) {
                     onItemDelete={props.onItemDelete}
                     onItemEdit={props.onItemEdit}
                     item={item}
-                    key={item._id}/>
+                    key={item._id}
+                />
             );
         }
         return null;

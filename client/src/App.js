@@ -34,7 +34,8 @@ export default class App extends Component {
             method: 'POST',
             body: JSON.stringify(data),
             headers:{'Content-Type': 'application/json'},
-        }).then(res => res.json())
+        })
+        .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(list => {
             console.log(list);
@@ -78,9 +79,10 @@ export default class App extends Component {
         fetch(url, {
             method: 'DELETE',
             headers:{'Content-Type': 'application/json'},
-        }).then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(lists => { this.setState({
+            })
+            .then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(lists => { this.setState({
             lists: lists, selectedListId: lists[0]._id
             });
         });
@@ -104,7 +106,8 @@ export default class App extends Component {
             method: 'PUT',
             body: JSON.stringify(data),
             headers:{'Content-Type': 'application/json'},
-        }).then(res => res.json())
+        })
+        .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(list => this.updateStateLists(list));
     }
@@ -116,7 +119,8 @@ export default class App extends Component {
             method: 'PUT',
             body: JSON.stringify(data),
             headers:{'Content-Type': 'application/json'},
-        }).then(res => res.json())
+        })
+        .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(list => this.updateStateLists(list));
     }
@@ -126,7 +130,8 @@ export default class App extends Component {
         fetch(url, {
             method: 'DELETE',
             headers:{'Content-Type': 'application/json'},
-        }).then(res => res.json())
+        })
+        .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(list => this.updateStateLists(list));
     }
@@ -137,7 +142,8 @@ export default class App extends Component {
             method: 'POST',
             body: JSON.stringify(data),
             headers:{'Content-Type': 'application/json'},
-        }).then(res => res.json())
+        })
+        .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(list => this.updateStateLists(list));
     }

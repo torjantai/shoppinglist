@@ -6,7 +6,6 @@ export default class ListRow extends Component {
         this.state = {
             article: this.props.item.article,
             category: this.props.item.category,
-            editing: false
         };
 
         this.onEditButtonClick = this.onEditButtonClick.bind(this);
@@ -16,11 +15,12 @@ export default class ListRow extends Component {
     }
 
     onEditButtonClick() {
-        this.setState({ editing: true });
+        this.props.onRowSelect(this.props.item._id)
+        console.log(this.props);
     }
 
     onSaveButtonClick() {
-        this.setState({ editing: false });
+        this.props.onRowSelect(null);
         this.props.onItemEdit(this.props.item._id,{
             article: this.state.article,
             category: this.state.category
@@ -39,7 +39,7 @@ export default class ListRow extends Component {
 
         const moveButtonText = this.props.item.isNeeded ? 'Ostettu' : 'Ostettaviin';
 
-        if (!this.state.editing) {
+        if (this.props.selectedRow !== this.props.item._id) {
             return (
                 <tr>
                     <td onClick={this.onEditButtonClick}>{this.props.item.article}</td>

@@ -15,6 +15,9 @@ export default class ListRow extends Component {
     }
 
     onEditButtonClick() {
+        if (this.props.selectedRow !== this.props.item._id) {
+            this.props.onRowSelectChange();
+        }
         this.props.onRowSelect(this.props.item._id)
         console.log(this.props);
     }
@@ -42,8 +45,8 @@ export default class ListRow extends Component {
         if (this.props.selectedRow !== this.props.item._id) {
             return (
                 <tr>
-                    <td onClick={this.onEditButtonClick}>{this.props.item.article}</td>
-                    <td onClick={this.onEditButtonClick}>{this.props.item.category}</td>
+                    <td onClick={this.onEditButtonClick}>{this.state.article}</td>
+                    <td onClick={this.onEditButtonClick}>{this.state.category}</td>
                     <td>
                         <button onClick={() => this.props.onItemEdit(
                         this.props.item._id, {isNeeded: !this.props.item.isNeeded })}>{moveButtonText}</button>

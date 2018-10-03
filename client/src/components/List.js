@@ -7,12 +7,18 @@ export default class List extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            selectedRow: null
+            selectedRow: null,
+            prevSelectedRow: null
         }
         this.onRowSelect = this.onRowSelect.bind(this);
+        this.onRowSelectChange = this.onRowSelectChange.bind(this);
     }
     onRowSelect(id) {
         this.setState({ selectedRow: id });
+    }
+
+    onRowSelectChange() {
+
     }
 
     render () {
@@ -23,6 +29,7 @@ export default class List extends Component {
             if (item.isNeeded) {
                 return (
                     <ListRow
+                        onRowSelectChange={this.onRowSelectChange}
                         selectedRow={this.state.selectedRow}
                         onRowSelect={this.onRowSelect}
                         onItemDelete={this.props.onItemDelete}
@@ -40,6 +47,7 @@ export default class List extends Component {
             if (!item.isNeeded) {
                 return (
                     <ListRow
+                        onRowSelectChange={this.onRowSelectChange}
                         selectedRow={this.state.selectedRow}
                         onRowSelect={this.onRowSelect}
                         onItemDelete={this.props.onItemDelete}

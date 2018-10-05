@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ListRow from './ListRow';
 import ListName from './ListName';
-import AddRow from './AddRow';
+
 import Table from './Table';
 
 export default class List extends Component {
@@ -77,6 +77,7 @@ export default class List extends Component {
                 <Table
                     listItems={reserveItems}
                     onItemAdd={this.props.onItemAdd}
+                    hideAddRow={true}
                 />
                 <button
                     onClick={() => {

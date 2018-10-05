@@ -2,6 +2,17 @@ import React from 'react';
 import AddRow from './AddRow';
 
 export default function Table(props) {
+
+    //this function is used to showing AddRow only in the 'needed' table
+    const addRow = () => {
+        if(!props.hideAddRow) {
+            return (
+                <AddRow onItemAdd={props.onItemAdd}/>
+            );
+        }
+
+    }
+
     return (
         <table className="table table-hover">
             <thead>
@@ -12,7 +23,7 @@ export default function Table(props) {
                 </tr>
             </thead>
             <tbody>
-                <AddRow onItemAdd={props.onItemAdd}/>
+                {addRow()}
                 {props.listItems}
             </tbody>
         </table>

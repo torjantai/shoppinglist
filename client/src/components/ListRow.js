@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+
 export default class ListRow extends Component {
     constructor(props) {
         super(props);
@@ -15,29 +16,29 @@ export default class ListRow extends Component {
     }
 
     onEditButtonClick() {
-        if (this.props.selectedRow !== this.props.item._id) {
-            this.props.onRowSelectChange();
-        }
         this.props.onRowSelect(this.props.item._id)
-        console.log(this.props);
     }
 
     onSaveButtonClick() {
         this.props.onRowSelect(null);
-        this.props.onItemEdit(this.props.item._id,{
-            article: this.state.article,
-            category: this.state.category
-        });
-
+        //will be saved only if fields have been changed
+        if ( this.state.article !== this.props.item.article ||
+            this.state.category !== this.props.item.category ) {
+            this.props.onItemEdit(this.props.item._id,{
+                article: this.state.article,
+                category: this.state.category
+            });
+        }
     }
 
     onArticleInputChange(event) {
-        this.setState({article: event.target.value});
+        this.setState({ article: event.target.value });
     }
 
     onCategoryInputChange(event) {
         this.setState({category: event.target.value});
     }
+
     render() {
 
         const moveButtonText = this.props.item.isNeeded ? 'Ostettu' : 'Ostettaviin';
@@ -54,7 +55,6 @@ export default class ListRow extends Component {
 
                         <button  onClick={() => this.props.onItemDelete(this.props.item._id)}>Poista</button>
 
-                    {/* <button onClick={this.onEditButtonClick}>Muokkaa</button> */}
                 </td>
                 </tr>
             );

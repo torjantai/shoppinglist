@@ -12,16 +12,18 @@ export default class List extends Component {
             prevSelectedRow: null
         }
         this.onRowSelect = this.onRowSelect.bind(this);
-        this.onRowSelectChange = this.onRowSelectChange.bind(this);
     }
     onRowSelect(id) {
-        this.setState({ selectedRow: id });
-    }
+        const { selectedRow } = this.state
+        if (!selectedRow) {
+            this.setState({ selectedRow: id }, () => console.log(this.state));
 
-    onRowSelectChange() {
-        //make it save the last selected row when selection changes
-        //maybe only when there has been a change
-        //how to check that? Set a state when editing?
+        } else {
+            this.setState({
+                    selectedRow: id,
+                    prevSelectedRow: selectedRow
+                }, () => console.log(this.state));
+        }
     }
 
     render () {
@@ -30,7 +32,7 @@ export default class List extends Component {
         const row = item => {
             return (
                 <ListRow
-                    onRowSelectChange={this.onRowSelectChange}
+
                     selectedRow={this.state.selectedRow}
                     onRowSelect={this.onRowSelect}
                     onItemDelete={this.props.onItemDelete}

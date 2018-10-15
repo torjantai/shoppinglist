@@ -151,7 +151,9 @@ export default class App extends Component {
     render() {
         if(this.state.lists.length === 0 || !this.state.selectedListId) return <div>Ladataan...</div>;
 
-        const list = this.state.lists.find(obj => {return obj._id === this.state.selectedListId});
+        const list = this.state.lists.find(obj => {
+                            return obj._id === this.state.selectedListId
+                        });
 
         return (
             <div className="bg-light mt-5 p-3">
@@ -161,8 +163,7 @@ export default class App extends Component {
                     onSelectChange={this.selectList}
                     lists={this.state.lists}
                 />
-                {/* <AddItem
-                    onItemAdd={this.onItemAdd}/> */}
+
                 <List
                     onListEdit={this.onListEdit}
                     onListDelete={this.onListDelete}

@@ -17,9 +17,9 @@ First, make sure you have mongod up an running on localhost.
 
 
 #### Known Issues
-    + server crashes if first mongodb connection fails
+* server crashes if first mongodb connection fails
 
 
 #### To Do
-    + authenticating
-    + error handling
+* authenticating
+* error handling

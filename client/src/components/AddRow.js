@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 export default class AddRow extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             article: '',
             category: '',

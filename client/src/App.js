@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import './App.css'; //file deleted for now
 import SelectList from './components/SelectList';
 import List from './components/List';
+import Login from './components/Login';
 // import AddItem from './components/addItem'
 
 export default class App extends Component {
@@ -157,6 +158,7 @@ export default class App extends Component {
 
         return (
             <div className="bg-light mt-5 p-3">
+                <Login />
                 <SelectList
                     selectedList={this.state.selectedListId}
                     createList={this.createList}

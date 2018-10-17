@@ -7,8 +7,6 @@ const passport = require('passport');
 //const Items = require('../models').Items;
 
 
-
-
 //all url's in this file will be prefixed with /shoppingList
 //as defined in server.js app.use('/shoppinglist', routes)
 

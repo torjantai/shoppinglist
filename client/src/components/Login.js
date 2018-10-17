@@ -9,7 +9,7 @@ export default class Login extends Component {
         };
     this.handleUserNameChange = this.handleUserNameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
-
+    this.handleSubmit = this.handleSubmit.bind(this);
 
     }
 
@@ -21,30 +21,36 @@ export default class Login extends Component {
         this.setState({ passwordField: event.target.value }, () => console.log(this.state));
     }
 
+    handleSubmit(event) {
+        event.preventDefault();
+        console.log('submit:', this.state)
+
+    }
+
 
     render() {
         return (
-            <form>
-                <div class="row">
+            <form onSubmit={this.handleSubmit}>
+                <div className="row">
 
-                    <div class="col">
+                    <div className="col">
                         <input
                             onChange={this.handleUserNameChange}
                             type="text"
-                            class="form-control"
+                            className="form-control"
                             placeholder="Tunnus"
                          />
                     </div>
-                    <div class="col">
+                    <div className="col">
                         <input
                             onChange={this.handlePasswordChange}
                             type="text"
-                            class="form-control"
+                            className="form-control"
                             placeholder="Salasana"
                         />
                     </div>
-                    <div class="col">
-                        <button type="submit" class="btn btn-primary">Luo tunnus</button>
+                    <div className="col">
+                        <button type="submit" className="btn btn-primary">Kirjaudu</button>
                     </div>
                 </div>
             </form>

@@ -1,7 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const brcypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({

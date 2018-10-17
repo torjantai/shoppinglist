@@ -4,15 +4,18 @@ const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const UserModel = require('../models/User');
 
+//Create a passport middleware to handle user registration
 passport.use('signup', new localStrategy({
-    usernameField: 'userName',
-    passwordField: 'password'
+  usernameField : 'userName',
+  passwordField : 'password'
 }, async (userName, password, done) => {
     try {
-        const user = await UserModel.create({ userName, password });
-        return done(null, user)
+      //Save the information provided by the user to the the database
+      const user = await UserModel.create({ userName, password });
+      //Send the user information to the next middleware
+      return done(null, user);
     } catch (error) {
-        done(error);
+      done(error);
     }
 }));
 

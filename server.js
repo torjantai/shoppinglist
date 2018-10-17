@@ -5,6 +5,7 @@ const routes        = require('./routes/index');
 const jsonParser    = require('body-parser').json;
 const mongoose      = require('mongoose');
 const logger        = require('morgan');
+require('./auth/auth');
 
 const app = express();
 
@@ -41,7 +42,8 @@ db.once('open', function() {
 // });
 
 // ROUTES
-app.use('/', express.static('public'))
+app.use('/', require('./routes/signup'));
+app.use('/', express.static('public'));
 //create a virtual path /shoppinglist and use routes from /route
 app.use('/shoppinglist', routes);
 

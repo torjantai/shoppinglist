@@ -8,6 +8,7 @@ const passport = require('passport');
 //const Items = require('../models').Items;
 
 
+
 //all url's in this file will be prefixed with /shoppingList
 //as defined in server.js app.use('/shoppinglist', routes)
 
@@ -22,7 +23,9 @@ router.get('/', function(req, res, next) {
 });
 
 //GET a single user with given id
-router.get('/:username', function (req, res, next) {
+router.get('/:username',
+    passport.authenticate('jwt', { session : false }),
+    function (req, res, next) {
     console.log(req.params);
     User.findOne( { userName: req.params.username }, function (err, doc) {
 
@@ -36,7 +39,7 @@ router.get('/:username', function (req, res, next) {
     });
 });
 
-//POST lists -- create a list
+//POST lists -- create a list under a user
 router.post('/:username', function(req, res, next) {
     console.log(req.body, req.params);
 
@@ -71,6 +74,24 @@ router.get('/:username/lists', function(req, res, next) {
         }
         res.json(doc.lists);
     });
+});
+
+//GET a single list with a given id
+router.get('/:username/lists/:listId', function(req, res, next) {
+    console.log(req.user);
+
+    User.findOne( { userName: req.params.username }, function (err, doc) {
+
+        if (err) return next(err);
+        if (!doc) {
+            err = new Error(`No user found with id ${req.params.username}`);
+            err.status = 404;
+            return next(err);
+        }
+        //here we use mongooses .id method for finding a subdocument with a given id
+        const lists = doc.lists.id(req.params.listId);
+        res.json(lists);
+    })
 });
 
 

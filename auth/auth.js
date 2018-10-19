@@ -61,9 +61,3 @@ passport.use(new JWTstrategy({
     done(error);
   }
 }));
-
-const secureRoute = () => {
-    passport.authenticate('jwt', { session : false })
-}
-
-module.exports = secureRoute;

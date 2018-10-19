@@ -12,21 +12,19 @@ const passport = require('passport');
 //all url's in this file will be prefixed with /shoppingList
 //as defined in server.js app.use('/shoppinglist', routes)
 
-//get all the users
-//NOTE: not necessary in the finished API
-router.get('/', function(req, res, next) {
-    User.find({})
-            .exec(function(err, users) {
-                if (err) return next(err);
-                res.json(users);
-            });
-});
 
 //GET a single user with given id
 router.get('/:username',
+
     passport.authenticate('jwt', { session : false }),
     function (req, res, next) {
-    console.log(req.params);
+    //req.user.userName comes from the token that was sent with the req
+    //if it doesn't match with the username on the route -> error
+    if (req.user.userName !== req.params.username) {
+        const err = new Error('Not authorised');
+        err.status = 401;
+        return next(err);
+    }
     User.findOne( { userName: req.params.username }, function (err, doc) {
 
         if (err) return next(err);

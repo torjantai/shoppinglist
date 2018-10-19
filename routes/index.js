@@ -58,14 +58,23 @@ router.post('/:username', function(req, res, next) {
 });
 
 
-// //GET all the lists
-// router.get('/', function(req, res, next) {
-//     List.find({})
-//             .exec(function(err, items) {
-//                 if (err) return next(err);
-//                 res.json(items);
-//             });
-// });
+//GET all the lists for a given user
+router.get('/:username/lists', function(req, res, next) {
+
+    User.findOne( { userName: req.params.username }, function (err, doc) {
+
+        if (err) return next(err);
+        if (!doc) {
+            err = new Error(`No user found with id ${req.params.username}`);
+            err.status = 404;
+            return next(err);
+        }
+        res.json(doc.lists);
+    });
+});
+
+
+//NOTE: everything below is based on the old data structure
 //
 // //POST lists -- create a list
 // router.post('/', function(req, res, next) {

@@ -1,7 +1,7 @@
 'use strict';
 
 const mongoose  = require('mongoose');
-const Schema    = mongoose.Schema;
+const { Schema } = mongoose;
 
 
 const ItemSchema = new Schema({
@@ -11,10 +11,9 @@ const ItemSchema = new Schema({
 });
 
 
-//owner will be replaced with ownerid once authenticating will be implemented
+
 const ListSchema = new Schema({
     listName: {required: true, type: String, trim: true},
-    owner: {required: true, type: String, trim: true},
     items: [ItemSchema]
 });
 
@@ -36,6 +35,6 @@ ItemSchema.pre('save', function(next) {
 const List = mongoose.model('List', ListSchema);
 const Items = mongoose.model('Items', ItemSchema);
 
-
+module.exports = ListSchema;
 module.exports.List = List;
 module.exports.Items = Items;

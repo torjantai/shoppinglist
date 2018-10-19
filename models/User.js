@@ -3,6 +3,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const { Schema } = mongoose;
+const ListSchema = require('./index');
 
 const UserSchema = new Schema({
     userName: {
@@ -13,7 +14,8 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    lists: [ListSchema]
 });
 
 UserSchema.pre('save', async function(next) {

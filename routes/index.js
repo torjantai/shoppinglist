@@ -13,7 +13,7 @@ router.use(passport.authenticate('jwt', { session : false }));
 //all url's in this file will be prefixed with /shoppingList
 //as defined in server.js app.use('/shoppinglist', routes)
 
-//router.param will catch any route that includes 'username'
+//router.param() will catch any route that includes 'username'
 router.param('username', function(req, res, next, username) {
         console.log('router.param', username);
         //check that req.user from token equals to username on route
@@ -23,14 +23,14 @@ router.param('username', function(req, res, next, username) {
         }
         //find user and store the doc on req object
         User.findOne( { userName: username }, function (err, doc) {
-                console.log(2);
+
                 if (err) return next(err);
                 if (!doc) {
                     err = new Error(`No user found with id ${username}`);
                     err.status = 404;
                     return next(err);
                 }
-                console.log(doc);
+                // console.log(doc);
                 req.userDocument = doc;
                 return next();
             });
@@ -43,60 +43,32 @@ router.get('/:username', function(req, res, next) {
         res.json(req.userDocument);
 });
 
-// //POST lists -- create a list under a user
-// router.post('/:username', function(req, res, next) {
-//     console.log(req.body, req.params);
-//
-//     User.findOne( { userName: req.params.username }, function (err, doc) {
-//
-//         if (err) return next(err);
-//         if (!doc) {
-//             err = new Error(`No user found with id ${req.params.username}`);
-//             err.status = 404;
-//             return next(err);
-//         }
-//         doc.lists.push(req.body);
-//         doc.save(function(err, doc) {
-//             if (err) return next(err);
-//             res.status(201);
-//             res.json(doc);
-//         });
-//     });
-// });
-//
-//
-// //GET all the lists for a given user
-// router.get('/:username/lists', function(req, res, next) {
-//
-//     User.findOne( { userName: req.params.username }, function (err, doc) {
-//
-//         if (err) return next(err);
-//         if (!doc) {
-//             err = new Error(`No user found with id ${req.params.username}`);
-//             err.status = 404;
-//             return next(err);
-//         }
-//         res.json(doc.lists);
-//     });
-// });
-//
-// //GET a single list with a given id
-// router.get('/:username/lists/:listId', function(req, res, next) {
-//     console.log(req.user);
-//
-//     User.findOne( { userName: req.params.username }, function (err, doc) {
-//
-//         if (err) return next(err);
-//         if (!doc) {
-//             err = new Error(`No user found with id ${req.params.username}`);
-//             err.status = 404;
-//             return next(err);
-//         }
-//         //here we use mongooses .id method for finding a subdocument with a given id
-//         const lists = doc.lists.id(req.params.listId);
-//         res.json(lists);
-//     })
-// });
+//POST lists -- create a list under a user
+//req.userDocument comes from router.param()
+router.post('/:username', function(req, res, next) {
+    console.log(req.body, req.params);
+
+    req.userDocument.lists.push(req.body);
+    req.userDocument.save(function(err, doc) {
+        if (err) return next(err);
+        res.status(201);
+        res.json(doc);
+    });
+});
+
+
+//GET a single list with a given id
+router.get('/:username/:listId', function(req, res, next) {
+    console.log('/:username/:listId', req.userDocument);
+    const list = req.userDocument.lists.id(req.params.listId);
+    if ( !list ) {
+        const err = new Error(`No list found with id ${req.params.listId}`);
+        err.status = 404;
+        return next(err);
+    }
+
+    res.json(list);
+});
 
 
 //NOTE: everything below is based on the old data structure

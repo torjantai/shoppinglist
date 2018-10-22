@@ -13,7 +13,7 @@ passport.use('signup', new localStrategy({
   passwordField : 'password'
 }, async (userName, password, done) => {
     try {
-      //Save the information provided by the user to the the database
+        //Save the information provided by the user to the the database
       const user = await UserModel.create({ userName, password });
       //Send the user information to the next middleware
       return done(null, user);

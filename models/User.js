@@ -25,6 +25,24 @@ UserSchema.pre('save', async function(next) {
     next();
 });
 
+//a user should always have at least one list to start with, here we check that
+UserSchema.pre('save', function(next) {
+    const defaultList = {
+        listName: 'Kauppalista',
+        items: [
+            {
+                article: 'tuote1',
+                category: 'kategoria1',
+                isNeeded: true
+            }
+        ]
+    }
+    if (this.lists.length === 0) {
+        this.lists.push(defaultList);
+    }
+    next();
+});
+
 UserSchema.methods.isValidPassword = async function(password) {
     const user = this;
     const compare = await bcrypt.compare(password, user.password);

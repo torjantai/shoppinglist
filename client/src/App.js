@@ -8,8 +8,10 @@ import Login from './components/Login';
 export default class App extends Component {
     constructor(props) {
         super(props);
-        this.state =    {   lists: [],
-                            selectedListId: null
+        this.state =    {   username: '',
+                            lists: [],
+                            selectedListId: null,
+                            jwt: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjViY2RiM2M1ZTUzNDk3MDlkNDNhZDc0NyIsInVzZXJOYW1lIjoiemV1cyJ9LCJpYXQiOjE1NDAyMDc1NzF9._Nc8CIXv2unoOtYL0xFglfUZIqUcyibHKSHGv2J5obE"
                         };
 
     this.selectList = this.selectList.bind(this);
@@ -47,24 +49,18 @@ export default class App extends Component {
     }
 
     getShoppingLists(listId) {
-        fetch('/shoppinglist')
-            .then(res => res.json())
+        fetch(`/shoppinglist/${this.state.username}`, {
+            method: 'get',
+            headers: new Headers({
+                'Authorization': this.state.jwt,
+                'Content-Type': 'application/json'
+            }),
+        }).then(res => res.json())
             .catch(error => console.error('Error:', error))
-            .then(lists => {
-                if (lists.length > 0) {
-                    const _listId = listId || lists[0]._id;
-                    this.setState({ lists: lists, selectedListId: _listId });
-                } else {
-                    this.createList({
-                        listName: 'Madness',
-                        owner: 'madman',
-                        items: [{
-                            article: 'Olutta',
-                            category: 'oispa',
-                            isNeeded: true
-                        }]
-                    });
-                }
+            .then(data => {
+
+                    const _listId = listId || data.lists[0]._id;
+                    this.setState({ lists: data.lists, selectedListId: _listId });
 
             })
             .catch(error => console.error('Error:', error))
@@ -150,7 +146,9 @@ export default class App extends Component {
     }
 
     render() {
-        if(this.state.lists.length === 0 || !this.state.selectedListId) return <div>Ladataan...</div>;
+        if(this.state.lists.length === 0 || !this.state.selectedListId) {
+             return <Login />;
+        }
 
         const list = this.state.lists.find(obj => {
                             return obj._id === this.state.selectedListId

@@ -17,10 +17,11 @@ const ListSchema = new Schema({
     items: [ItemSchema]
 });
 
-ItemSchema.method('update', function(updates, callback) {
-    Object.assign(this, updates);
-    this.parent().save(callback);
-});
+
+// ItemSchema.method('update', function(updates, callback) {
+//     Object.assign(this, updates);
+//     this.parent().save(callback);
+// });
 
 
 

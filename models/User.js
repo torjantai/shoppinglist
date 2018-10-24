@@ -8,7 +8,9 @@ const ListSchema = require('./index');
 const UserSchema = new Schema({
     userName: {
         type: String,
-        required: true,
+        minlength: [ 6, 'Käyttäjätunnuksen on oltava 6 - 12 merkkiä pitkä' ],
+        maxlength: [ 12, 'Käyttäjätunnuksen on oltava 6 - 12 merkkiä pitkä' ],
+        required: [ true, 'Käyttäjätunnus on pakollinen' ],
         unique: true
     },
     password: {

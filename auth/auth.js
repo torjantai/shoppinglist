@@ -50,6 +50,7 @@ passport.use('login', new localStrategy({
 //This verifies that the token sent by the user is valid
 passport.use(new JWTstrategy({
   //secret we used to sign our JWT
+  //NOTE: secret must be moved to another file in production
   secretOrKey : 'top_secret',
  //client must send the token in the headers as a bearer token
   jwtFromRequest : ExtractJWT.fromAuthHeaderAsBearerToken()

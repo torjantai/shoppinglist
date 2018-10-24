@@ -8,7 +8,10 @@ const logger        = require('morgan');
 require('./auth/auth');
 
 const app = express();
+const db = mongoose.connection;
 
+//set timeout for mongoose reconnect
+const mongoTimeout = 30000;
 
 app.use(logger('dev'));
 //use jsonParser to parse req.body
@@ -19,27 +22,27 @@ app.use(jsonParser({extended: true}));
 
 
 // MONGO CONNECTION
-mongoose.connect('mongodb://localhost:27017/shoppingList');
-const db = mongoose.connection;
 
 db.on('error', function(err){
     console.error('connection error:', err);
+    mongoose.disconnect();
 });
+
+db.on('disconnected', function() {
+    console.log(`MongoDB disconnected, reconnecting in ${mongoTimeout/1000} seconds`);
+    setTimeout(function mongoConnet() {
+        mongoose.connect('mongodb://localhost:27017/shoppingList');
+    }, mongoTimeout );
+});
+
 
 db.once('open', function() {
     console.log('db connection successful');
 });
 
-//uncomment following in order to grant cross-origin Access
-// app.use(function(req, res, next, err){
-//     res.header('Access-Control-Allow-Origin', '*');
-//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-//     if(req.method === 'OPTIONS') {
-//         res.header('Access-Control-Allow-Methods', 'PUT,POST,DELETE')
-//         return res.status(200).json({});
-//     }
-//     next(err);
-// });
+mongoose.connect('mongodb://localhost:27017/shoppingList',
+    {autoReconnect: true});
+
 
 // ROUTES
 app.use('/', require('./routes/signup'));

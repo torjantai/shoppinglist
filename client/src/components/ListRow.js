@@ -8,18 +8,13 @@ export default class ListRow extends Component {
             article: this.props.item.article,
             category: this.props.item.category,
         };
-
-        this.onEditButtonClick = this.onEditButtonClick.bind(this);
-        this.onArticleInputChange = this.onArticleInputChange.bind(this);
-        this.onCategoryInputChange = this.onCategoryInputChange.bind(this);
-        this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
     }
 
-    onEditButtonClick() {
+    onEditButtonClick = () => {
         this.props.onRowSelect(this.props.item._id)
     }
 
-    onSaveButtonClick() {
+    onSaveButtonClick = () => {
         this.props.onRowSelect(null);
         //will be saved only if fields have been changed
         if ( this.state.article !== this.props.item.article ||
@@ -31,11 +26,11 @@ export default class ListRow extends Component {
         }
     }
 
-    onArticleInputChange(event) {
+    onArticleInputChange = (event) => {
         this.setState({ article: event.target.value });
     }
 
-    onCategoryInputChange(event) {
+    onCategoryInputChange = (event) => {
         this.setState({category: event.target.value});
     }
 

@@ -11,9 +11,8 @@ export default class List extends Component {
             selectedRow: null,
             prevSelectedRow: null
         }
-        this.onRowSelect = this.onRowSelect.bind(this);
     }
-    onRowSelect(id) {
+    onRowSelect = (id) => {
         const { selectedRow } = this.state
         if (!selectedRow) {
             this.setState({ selectedRow: id }, () => console.log(this.state));

@@ -8,47 +8,68 @@ import Login from './components/Login';
 export default class App extends Component {
     constructor(props) {
         super(props);
-        this.state =    {   username: '',
+        this.state =    {   username: null,
                             lists: [],
                             selectedListId: null,
-                            jwt: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjViY2RiM2M1ZTUzNDk3MDlkNDNhZDc0NyIsInVzZXJOYW1lIjoiemV1cyJ9LCJpYXQiOjE1NDAyMDc1NzF9._Nc8CIXv2unoOtYL0xFglfUZIqUcyibHKSHGv2J5obE"
+                            jwt: null,
                         };
-
-    this.selectList = this.selectList.bind(this);
-    this.onItemEdit = this.onItemEdit.bind(this);
-    this.onItemDelete = this.onItemDelete.bind(this);
-    this.onItemAdd = this.onItemAdd.bind(this);
-    this.createList = this.createList.bind(this);
-    this.onListDelete = this.onListDelete.bind(this);
-    this.onListEdit = this.onListEdit.bind(this);
     }
 
     componentDidMount() {
-        this.getShoppingLists();
+        if (this.state.username) {
+            this.getShoppingLists();
+        }
     }
 
-    selectList(id) {
-        this.setState({ selectedListId: id });
-    }
+    // conponentDidUpdate() {
+    //     if (this.state.userName) {
+    //         this.getShoppingLists();
+    //     }
+    // }
 
-    createList(data) {
-        const url = `/shoppinglist`;
+    login = (username, password) => {
+        const url = `/login`;
         fetch(url, {
             method: 'POST',
-            body: JSON.stringify(data),
-            headers:{'Content-Type': 'application/json'},
+            body: JSON.stringify({userName: username, password: password}),
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
         })
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
-        .then(list => {
-            console.log(list);
-            this.setState({ lists: this.state.lists.concat(list), selectedListId: list._id });
-            // this.setState({ lists: [...this.state.lists, list], selectedListId: list._id });
+        .then(data => {
+            this.setState({ username: username, jwt: `Bearer ${data.token}`}, () => {
+                console.log(this.state);
+                this.getShoppingLists();
+            });
+        })
+    }
+
+    selectList = (id) => {
+        this.setState({ selectedListId: id });
+    }
+
+    createList = (data) => {
+        const url = `/shoppinglist/${this.state.username}`;
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: new Headers({
+                'Authorization': this.state.jwt,
+                'Content-Type': 'application/json'
+            }),
+        })
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(data => {
+            console.log(data);
+            this.setState({ lists: data.lists, selectedListId: data.lists[0]._id });
         });
 
     }
 
-    getShoppingLists(listId) {
+    getShoppingLists = (listId) => {
         fetch(`/shoppinglist/${this.state.username}`, {
             method: 'get',
             headers: new Headers({
@@ -70,9 +91,9 @@ export default class App extends Component {
                 });
     }
 
-    onListDelete() {
-        if (this.state.lists.length < 2) return;
-        const url = `/shoppinglist/${this.state.selectedListId}`;
+    onListDelete = () => {
+
+        const url = `/shoppinglist/${this.state.username}/${this.state.selectedListId}`;
         fetch(url, {
             method: 'DELETE',
             headers:{'Content-Type': 'application/json'},
@@ -86,7 +107,7 @@ export default class App extends Component {
     }
 
     //helper function to update state when only one of the lists is changed
-    updateStateLists(newData) {
+    updateStateLists = (newData) => {
         const arrayIndex = this.state.lists.findIndex(x => x._id === this.state.selectedListId);
         this.setState({
             lists: [
@@ -96,58 +117,27 @@ export default class App extends Component {
             ]
         });
     }
-    onListEdit(data) {
+    onListEdit = (data) => {
         console.log('app - onListEdit');
         const url = `/shoppinglist/${this.state.selectedListId}`;
         fetch(url, {
             method: 'PUT',
             body: JSON.stringify(data),
-            headers:{'Content-Type': 'application/json'},
-        })
-        .then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(list => this.updateStateLists(list));
-    }
-    // sample url:
-    // /shoppinglist/5b3b4c0915981d32d8a25685/items/5b3ca58e407cd01210835c7e
-    onItemEdit(itemId, data) {
-        const url = `/shoppinglist/${this.state.selectedListId}/items/${itemId}`;
-        fetch(url, {
-            method: 'PUT',
-            body: JSON.stringify(data),
-            headers:{'Content-Type': 'application/json'},
+            headers: new Headers({
+                'Authorization': this.state.jwt,
+                'Content-Type': 'application/json'
+            }),
         })
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(list => this.updateStateLists(list));
     }
 
-    onItemDelete(itemId) {
-        const url = `/shoppinglist/${this.state.selectedListId}/items/${itemId}`;
-        fetch(url, {
-            method: 'DELETE',
-            headers:{'Content-Type': 'application/json'},
-        })
-        .then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(list => this.updateStateLists(list));
-    }
 
-    onItemAdd(data) {
-        const url = `/shoppinglist/${this.state.selectedListId}/items/`;
-        fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers:{'Content-Type': 'application/json'},
-        })
-        .then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(list => this.updateStateLists(list));
-    }
 
     render() {
         if(this.state.lists.length === 0 || !this.state.selectedListId) {
-             return <Login />;
+             return <Login login={this.login}/>;
         }
 
         const list = this.state.lists.find(obj => {
@@ -156,7 +146,7 @@ export default class App extends Component {
 
         return (
             <div className="bg-light mt-5 p-3">
-                <Login />
+
                 <SelectList
                     selectedList={this.state.selectedListId}
                     createList={this.createList}

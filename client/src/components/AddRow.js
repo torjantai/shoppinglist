@@ -9,26 +9,22 @@ export default class AddRow extends Component {
             category: '',
             isNeeded: true
         };
-        this.onArticleInputChange = this.onArticleInputChange.bind(this);
-        this.onCategoryInputChange = this.onCategoryInputChange.bind(this);
-        this.onSave = this.onSave.bind(this);
-        this.onInputEnter = this.onInputEnter.bind(this);
     }
 
-    onArticleInputChange(event) {
+    onArticleInputChange = (event) => {
         this.setState({article: event.target.value});
     }
 
-    onCategoryInputChange(event) {
+    onCategoryInputChange = (event) => {
         this.setState({category: event.target.value});
     }
 
-    onSave() {
+    onSave = () => {
         this.props.onItemAdd(this.state);
         this.setState({ article: '', category: '' });
     }
 
-    onInputEnter(e) {
+    onInputEnter = (e) => {
         if (e.keyCode === 13) {
            this.onSave();
         }

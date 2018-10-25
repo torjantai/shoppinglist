@@ -4,11 +4,9 @@ import React, { Component } from 'react';
 export default class SelectList extends Component {
     constructor(props) {
         super(props);
-
-        this.onChange = this.onChange.bind(this);
     }
 
-    onChange(event) {
+    onChange = (event) => {
         if(event.target.value === 'new list') {
             this.props.createList({
                 listName: 'Uusi lista',

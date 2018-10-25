@@ -9,23 +9,19 @@ export default class ListName extends Component {
             listName: this.props.listName,
             editing: false
         };
-
-        this.onEditButtonClick = this.onEditButtonClick.bind(this);
-        this.onInputChange = this.onInputChange.bind(this);
-        this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
     }
 
-    onEditButtonClick() {
+    onEditButtonClick = () => {
         this.setState({ listName: this.props.listName, editing: true });
         // console.log('editing title');
     }
 
-    onInputChange(event) {
+    onInputChange = (event) => {
         this.setState({ listName: event.target.value });
         // console.log(this.state.listName);
     }
 
-    onSaveButtonClick() {
+    onSaveButtonClick = () => {
         this.setState({ editing: false });
         this.props.onListEdit({ listName: this.state.listName });
     }

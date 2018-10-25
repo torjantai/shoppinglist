@@ -7,23 +7,20 @@ export default class Login extends Component {
             userNameField: '',
             passwordField: '',
         };
-    this.handleUserNameChange = this.handleUserNameChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-
     }
 
-    handleUserNameChange(event) {
+    handleUserNameChange = (event) => {
         this.setState({ userNameField: event.target.value }, () => console.log(this.state));
     }
 
-    handlePasswordChange(event) {
+    handlePasswordChange = (event) => {
         this.setState({ passwordField: event.target.value }, () => console.log(this.state));
     }
 
-    handleSubmit(event) {
+    handleSubmit = (event) => {
         event.preventDefault();
         console.log('submit:', this.state)
+        this.props.login(this.state.userNameField, this.state.passwordField);
 
     }
 

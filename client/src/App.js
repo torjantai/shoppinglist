@@ -16,16 +16,24 @@ export default class App extends Component {
     }
 
     componentDidMount() {
-        if (this.state.username) {
-            this.getShoppingLists();
+        if (window.localStorage.jwt) {
+            console.log(window.localStorage);
+            this.setState({
+                username: window.localStorage.getItem('username'),
+                jwt: `Bearer ${window.localStorage.getItem('jwt')}`
+            }, () => {
+                this.getShoppingLists();
+            });
+
         }
     }
 
-    // conponentDidUpdate() {
-    //     if (this.state.userName) {
-    //         this.getShoppingLists();
-    //     }
-    // }
+    //stores JWT and username to localStorage
+    storeJWT = (token, username) => {
+        const storage = window.localStorage;
+        storage.setItem('jwt', token);
+        storage.setItem('username', username);
+    }
 
     login = (username, password) => {
         const url = `/login`;
@@ -39,6 +47,7 @@ export default class App extends Component {
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(data => {
+            this.storeJWT(data.token, username);
             this.setState({ username: username, jwt: `Bearer ${data.token}`}, () => {
                 console.log(this.state);
                 this.getShoppingLists();
@@ -70,12 +79,13 @@ export default class App extends Component {
     }
 
     getShoppingLists = (listId) => {
+        console.log('getShoppingLists state:', this.state);
         fetch(`/shoppinglist/${this.state.username}`, {
             method: 'get',
             headers: new Headers({
                 'Authorization': this.state.jwt,
                 'Content-Type': 'application/json'
-            }),
+            })
         }).then(res => res.json())
             .catch(error => console.error('Error:', error))
             .then(data => {
@@ -86,8 +96,7 @@ export default class App extends Component {
             })
             .catch(error => console.error('Error:', error))
             .then(() => {
-                    console.log(this.state.lists);
-                    console.log(this.state.selectedListId);
+                    console.log(this.state);
                 });
     }
 

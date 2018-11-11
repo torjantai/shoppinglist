@@ -1,16 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 
-export default class SelectList extends Component {
-    constructor(props) {
-        super(props);
-    }
+export default function SelectList(props) {
 
-    onChange = (event) => {
+
+    const onChange = (event) => {
         if(event.target.value === 'new list') {
-            this.props.createList({
+            props.createList({
                 listName: 'Uusi lista',
-                owner: 'madman',
                 items: [{
                     article: 'Olutta',
                     category: 'Juomat',
@@ -18,20 +15,19 @@ export default class SelectList extends Component {
                 }]
             });
         } else {
-            this.props.onSelectChange(event.target.value);
+            props.onSelectChange(event.target.value);
         }
     }
 
-    render () {
-        console.log(this.props)
+
         return (
             <form>
                 <select
                     className="form-control"
-                    value={this.props.selectedList}
-                    onChange={this.onChange}>
+                    value={props.selectedList}
+                    onChange={onChange}>
 
-                    {this.props.lists.map(list => {
+                    {props.lists.map(list => {
                         return (
                             <option
                                 value={list._id}
@@ -47,6 +43,5 @@ export default class SelectList extends Component {
 
 
         );
-    }
 
 }

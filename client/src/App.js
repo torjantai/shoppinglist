@@ -16,6 +16,7 @@ export default class App extends Component {
     }
 
     componentDidMount() {
+
         if (window.localStorage.jwt) {
             console.log(window.localStorage);
             this.setState({
@@ -85,14 +86,12 @@ export default class App extends Component {
             headers: new Headers({
                 'Authorization': this.state.jwt,
                 'Content-Type': 'application/json'
-            })
-        }).then(res => res.json())
+                })
+            }).then(res => res.json())
             .catch(error => console.error('Error:', error))
             .then(data => {
-
                     const _listId = listId || data.lists[0]._id;
                     this.setState({ lists: data.lists, selectedListId: _listId });
-
             })
             .catch(error => console.error('Error:', error))
             .then(() => {
@@ -101,45 +100,36 @@ export default class App extends Component {
     }
 
     onListDelete = () => {
-
         const url = `/shoppinglist/${this.state.username}/${this.state.selectedListId}`;
         fetch(url, {
             method: 'DELETE',
-            headers:{'Content-Type': 'application/json'},
-            })
-            .then(res => res.json())
+            headers: new Headers({
+                'Authorization': this.state.jwt,
+                'Content-Type': 'application/json'
+                })
+            }).then(res => res.json())
             .catch(error => console.error('Error:', error))
-            .then(lists => { this.setState({
-            lists: lists, selectedListId: lists[0]._id
+            .then(data => {
+                this.setState({
+                    lists: data.lists,
+                    selectedListId: data.lists[0]._id
+                });
             });
-        });
     }
 
-    //helper function to update state when only one of the lists is changed
-    updateStateLists = (newData) => {
-        const arrayIndex = this.state.lists.findIndex(x => x._id === this.state.selectedListId);
-        this.setState({
-            lists: [
-                ...this.state.lists.slice(0, arrayIndex),
-                Object.assign({}, this.state.lists[arrayIndex], newData),
-                ...this.state.lists.slice(arrayIndex + 1)
-            ]
-        });
-    }
-    onListEdit = (data) => {
+    onListEdit = () => {
         console.log('app - onListEdit');
-        const url = `/shoppinglist/${this.state.selectedListId}`;
+        const url = `/shoppinglist/${this.state.username}/${this.state.selectedListId}`;
         fetch(url, {
             method: 'PUT',
             body: JSON.stringify(data),
             headers: new Headers({
                 'Authorization': this.state.jwt,
                 'Content-Type': 'application/json'
-            }),
-        })
-        .then(res => res.json())
+            })
+        }).then(res => res.json())
         .catch(error => console.error('Error:', error))
-        .then(list => this.updateStateLists(list));
+        .then(data => this.setState({ lists: data.lists }));
     }
 
 

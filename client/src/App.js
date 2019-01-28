@@ -117,7 +117,7 @@ export default class App extends Component {
             });
     }
 
-    onListEdit = () => {
+    onListEdit = (data) => {
         console.log('app - onListEdit');
         const url = `/shoppinglist/${this.state.username}/${this.state.selectedListId}`;
         fetch(url, {

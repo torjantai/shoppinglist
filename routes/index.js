@@ -80,7 +80,7 @@ router.put('/:username/:listId', function(req, res, next) {
     }
 
     list.set(req.body);
-    req.userDocument.save(function(err, doc) {
+    req.userDocument.save(function(err, next) {
         if (err) return next(err);
         res.status(201);
         res.json(req.userDocument);

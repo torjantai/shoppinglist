@@ -31,7 +31,6 @@ export default class List extends Component {
         const row = item => {
             return (
                 <ListRow
-
                     selectedRow={this.state.selectedRow}
                     onRowSelect={this.onRowSelect}
                     onItemDelete={this.props.onItemDelete}

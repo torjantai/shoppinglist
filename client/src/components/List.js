@@ -36,7 +36,7 @@ export default class List extends Component {
                     onItemDelete={this.props.onItemDelete}
                     onItemEdit={this.props.onItemEdit}
                     item={item}
-                    key={item._id}
+                    key={`${item.article}${item.category}${item._id}`}
                 />
             );
         }

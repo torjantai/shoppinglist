@@ -48,7 +48,13 @@ export default class ListRow extends Component {
                         this.props.item._id, {isNeeded: !this.props.item.isNeeded })}>{moveButtonText}</button>
 
 
-                        <button  onClick={() => this.props.onItemDelete(this.props.item._id)}>Poista</button>
+                        <button
+                            onClick={() => {
+                                this.props.onItemDelete(this.props.item);
+                            }}
+                        >
+                        Poista
+                        </button>
 
                 </td>
                 </tr>

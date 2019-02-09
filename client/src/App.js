@@ -117,22 +117,29 @@ export default class App extends Component {
             });
     }
 
-    onListEdit = (data) => {
-        console.log('app - onListEdit');
-        const url = `/shoppinglist/${this.state.username}/${this.state.selectedListId}`;
-        fetch(url, {
-            method: 'PUT',
-            body: JSON.stringify(data),
-            headers: new Headers({
-                'Authorization': this.state.jwt,
-                'Content-Type': 'application/json'
-            })
-        }).then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(data => this.setState({ lists: data.lists }));
+
+    onItemAdd = (itemObj) => {
+        this.setState(prevState => {
+            const list = prevState.lists.find(list => list._id === prevState.selectedListId);
+            list.items.unshift(itemObj);
+            return list;
+        });
     }
 
-
+    onItemDelete = (itemObj) => {
+        console.log('qwe', itemObj);
+        this.setState(prevState => {
+            const listToEdit = prevState.lists.find(list => list._id === prevState.selectedListId);
+            console.log('asdf', listToEdit);
+            const items = listToEdit.items;
+            const itemToDel = items.find(item =>
+                item.article === itemObj.article
+                    && item.category === itemObj.category);
+            const index = items.indexOf(itemToDel);
+            items.splice(index, 1);
+            return listToEdit;
+        });
+    }
 
     render() {
         if(this.state.lists.length === 0 || !this.state.selectedListId) {

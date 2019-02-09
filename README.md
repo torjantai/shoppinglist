@@ -7,7 +7,7 @@ First, make sure you have mongod up an running on localhost.
 
 
 1. Run `npm install` at your project root
-2. Run `npm install` at './client'
+2. Run `npm install` at `./client`
 2. Run `npm start` at root folder to start the server.
 3. At `/client`, run `npm start` again.
 4. Open `localhost:3000` on your web browser.

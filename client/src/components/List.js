@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ListRow from './ListRow';
 import ListName from './ListName';
-
+import Saver from './Saver';
 import Table from './Table';
 
 export default class List extends Component {
@@ -62,8 +62,12 @@ export default class List extends Component {
             <div>
                 <ListName
                     key={this.props.list._id}
-                    onListEdit={this.props.onListEdit}
+                    onListSave={this.props.onListSave}
                     listName={this.props.list.listName}
+                />
+                <Saver
+                    unSavedChanges={this.props.unSavedChanges}
+                    onListSave={this.props.onListSave}
                 />
 
                 <h3>Ostettavat</h3>

@@ -23,7 +23,7 @@ export default class ListName extends Component {
 
     onSaveButtonClick = () => {
         this.setState({ editing: false });
-        this.props.onListEdit({ listName: this.state.listName });
+        this.props.onListSave({ listName: this.state.listName });
     }
 
     render() {

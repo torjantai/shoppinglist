@@ -3,20 +3,23 @@ import React, { Component } from 'react';
 import SelectList from './components/SelectList';
 import List from './components/List';
 import Login from './components/Login';
+
 // import AddItem from './components/addItem'
 
 export default class App extends Component {
     constructor(props) {
         super(props);
-        this.state =    {   username: null,
-                            lists: [],
-                            selectedListId: null,
-                            jwt: null,
-                        };
+        this.state = {
+            username: null,
+            lists: [],
+            selectedListId: null,
+            jwt: null,
+            isFetching: false,
+            unSavedChanges: false,
+        };
     }
 
     componentDidMount() {
-
         if (window.localStorage.jwt) {
             console.log(window.localStorage);
             this.setState({
@@ -57,6 +60,7 @@ export default class App extends Component {
     }
 
     selectList = (id) => {
+        this.onListSave();
         this.setState({ selectedListId: id });
     }
 
@@ -101,8 +105,10 @@ export default class App extends Component {
 
     onListDelete = () => {
         const url = `/shoppinglist/${this.state.username}/${this.state.selectedListId}`;
+        
         fetch(url, {
             method: 'DELETE',
+            
             headers: new Headers({
                 'Authorization': this.state.jwt,
                 'Content-Type': 'application/json'
@@ -113,6 +119,26 @@ export default class App extends Component {
                 this.setState({
                     lists: data.lists,
                     selectedListId: data.lists[0]._id
+                });
+            });
+    }
+
+    onListSave = () => {
+        const url = `/shoppinglist/${this.state.username}/${this.state.selectedListId}`;
+        const data = this.state.lists.find(list => list._id === this.state.selectedListId);
+        fetch(url, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers: new Headers({
+                'Authorization': this.state.jwt,
+                'Content-Type': 'application/json'
+                })
+            }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(data => {
+                this.setState({
+                    lists: data.lists,
+                    unSavedChanges: false,
                 });
             });
     }
@@ -128,6 +154,7 @@ export default class App extends Component {
     }
 
     onItemDelete = (itemObj) => {
+
         this.setState(prevState => {
             const lists = prevState.lists.slice();
             const list = lists.find(list => list._id === prevState.selectedListId);
@@ -146,7 +173,7 @@ export default class App extends Component {
             const index = list.items.findIndex(item => origItemObj.article === item.article
                 && origItemObj.category === item.category);
             list.items[index] = newItemObj;
-            return { lists };
+            return { lists, unSavedChanges: true };
         });
     }
 
@@ -173,7 +200,8 @@ export default class App extends Component {
                 />
 
                 <List
-                    onListEdit={this.onListEdit}
+                    unSavedChanges={this.state.unSavedChanges}
+                    onListSave={this.onListSave}
                     onListDelete={this.onListDelete}
                     onItemAdd={this.onItemAdd}
                     onItemDelete={this.onItemDelete}

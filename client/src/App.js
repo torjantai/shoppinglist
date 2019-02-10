@@ -138,6 +138,18 @@ export default class App extends Component {
         });
     }
 
+    onItemEdit = (origItemObj, newItemObj) => {
+        console.log('onitemedit', origItemObj, newItemObj);
+        this.setState(prevState => {
+            const lists = prevState.lists.slice();
+            const list = lists.find(list => list._id === prevState.selectedListId);
+            const index = list.items.findIndex(item => origItemObj.article === item.article
+                && origItemObj.category === item.category);
+            list.items[index] = newItemObj;
+            return { lists };
+        });
+    }
+
 
 
     render() {

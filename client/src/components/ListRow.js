@@ -19,7 +19,7 @@ export default class ListRow extends Component {
         //will be saved only if fields have been changed
         if ( this.state.article !== this.props.item.article ||
             this.state.category !== this.props.item.category ) {
-            this.props.onItemEdit(this.state);
+            this.props.onItemEdit(this.props.item, { ...this.props.item, ...this.state });
         }
     }
 

@@ -7,6 +7,8 @@ import Login from './components/Login';
 // import AddItem from './components/addItem'
 
 export default class App extends Component {
+    timeoutID = null;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -29,6 +31,13 @@ export default class App extends Component {
                 this.getShoppingLists();
             });
 
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.lists !== prevState.lists) {
+            clearTimeout(this.timeoutID);
+            this.timeoutID = window.setTimeout(this.onListSave, 10000);
         }
     }
 

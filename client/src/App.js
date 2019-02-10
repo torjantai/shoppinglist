@@ -120,28 +120,28 @@ export default class App extends Component {
 
     onItemAdd = (itemObj) => {
         this.setState(prevState => {
-            const list = prevState.lists.find(list => list._id === prevState.selectedListId);
+            const lists = prevState.lists.slice();
+            const list = lists.find(list => list._id === prevState.selectedListId);
             list.items.unshift(itemObj);
-            return list;
+            return { lists };
         });
     }
 
     onItemDelete = (itemObj) => {
-        console.log('qwe', itemObj);
         this.setState(prevState => {
-            const listToEdit = prevState.lists.find(list => list._id === prevState.selectedListId);
-            console.log('asdf', listToEdit);
-            const items = listToEdit.items;
-            const itemToDel = items.find(item =>
-                item.article === itemObj.article
-                    && item.category === itemObj.category);
-            const index = items.indexOf(itemToDel);
-            items.splice(index, 1);
-            return listToEdit;
+            const lists = prevState.lists.slice();
+            const list = lists.find(list => list._id === prevState.selectedListId);
+            const index = list.items.findIndex(item => itemObj.article === item.article
+                && itemObj.category === item.category);
+            list.items.splice(index, 1);
+            return { lists };
         });
     }
 
+
+
     render() {
+        console.log('app render', this.state);
         if(this.state.lists.length === 0 || !this.state.selectedListId) {
              return <Login login={this.login}/>;
         }

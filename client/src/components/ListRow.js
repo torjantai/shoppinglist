@@ -19,10 +19,7 @@ export default class ListRow extends Component {
         //will be saved only if fields have been changed
         if ( this.state.article !== this.props.item.article ||
             this.state.category !== this.props.item.category ) {
-            this.props.onItemEdit(this.props.item._id,{
-                article: this.state.article,
-                category: this.state.category
-            });
+            this.props.onItemEdit(this.state);
         }
     }
 
@@ -31,7 +28,7 @@ export default class ListRow extends Component {
     }
 
     onCategoryInputChange = (event) => {
-        this.setState({category: event.target.value});
+        this.setState({ category: event.target.value });
     }
 
     render() {
@@ -44,8 +41,7 @@ export default class ListRow extends Component {
                     <td onClick={this.onEditButtonClick}>{this.state.article}</td>
                     <td onClick={this.onEditButtonClick}>{this.state.category}</td>
                     <td>
-                        <button onClick={() => this.props.onItemEdit(
-                        this.props.item._id, {isNeeded: !this.props.item.isNeeded })}>{moveButtonText}</button>
+                        <button onClick={() => this.props.onItemEdit(this.props.item, { ...this.state, isNeeded: !this.props.item.isNeeded })}>{moveButtonText}</button>
 
 
                         <button

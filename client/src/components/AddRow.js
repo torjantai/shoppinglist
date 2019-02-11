@@ -59,7 +59,7 @@ export default class AddRow extends Component {
                     <td><button
                             disabled={isDisabled}
                             onClick={this.onSave}
-                        >Tallenna</button></td>
+                        >Lisää</button></td>
                 </tr>
         );
 

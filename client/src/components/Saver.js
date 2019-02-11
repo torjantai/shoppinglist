@@ -7,7 +7,7 @@ export default function Saver({ unSavedChanges, onListSave }) {
             <span>
                 {text}
             </span>
-            <button onClick={onListSave}>Tallenna</button>
+            {unSavedChanges && <button onClick={onListSave}>Tallenna</button>}
         </div>
     );
 }

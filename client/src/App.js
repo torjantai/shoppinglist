@@ -35,9 +35,12 @@ export default class App extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (this.state.lists !== prevState.lists) {
+        if (
+            this.state.lists !== prevState.lists
+            && this.state.unSavedChanges
+        ) {
             clearTimeout(this.timeoutID);
-            this.timeoutID = window.setTimeout(this.onListSave, 10000);
+            this.timeoutID = setTimeout(this.onListSave, 10000);
         }
     }
 
@@ -158,7 +161,7 @@ export default class App extends Component {
             const lists = prevState.lists.slice();
             const list = lists.find(list => list._id === prevState.selectedListId);
             list.items.unshift(itemObj);
-            return { lists };
+            return { lists, unSavedChanges: true };
         });
     }
 
@@ -170,7 +173,7 @@ export default class App extends Component {
             const index = list.items.findIndex(item => itemObj.article === item.article
                 && itemObj.category === item.category);
             list.items.splice(index, 1);
-            return { lists };
+            return { lists, unSavedChanges: true };
         });
     }
 
